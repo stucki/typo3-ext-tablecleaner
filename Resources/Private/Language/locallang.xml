@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<T3locallang>
+	<meta type='array'>
+		<type>module</type>
+		<description>Language labels for scheduler task belonging to extension 'tablecleaner'</description>
+	</meta>
+	<data type='array'>
+		<languageKey index='default' type='array'>
+			<label index='tasks.clean.title'>Table Cleaner</label>
+			<label index='tasks.clean.description'>Removes deleted records older than N days from tables.</label>
+			<label index='tasks.clean.dayLimit'>Remove deleted records older than given days</label>
+			<label index='tasks.clean.tables'>Tables</label>
+			<label index='tasks.clean.invalidTables'>You somehow selected invalid tables</label>
+			<label index='tasks.clean.additionalInformation'>Remove deleted records older than %s days from tables: %s</label>
+			<label index='tasks.truncate.title'>Table Truncater</label>
+			<label index='tasks.truncate.description'>Removes records older than N days from tables.</label>
+			<label index='tasks.truncate.dayLimit'>Remove records older than given days</label>
+			<label index='tasks.truncate.tables'>Tables</label>
+			<label index='tasks.truncate.invalidTables'>You somehow selected invalid tables</label>
+			<label index='tasks.truncate.additionalInformation'>Remove records older than %s days from tables: %s</label>
+		</languageKey>
+	</data>
+</T3locallang>
