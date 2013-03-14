@@ -13,7 +13,7 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Table Cleaner',
 	'description' => 'Removes (deleted) records older than [N] days from tables.',
-	'category' => 'fe',
+	'category' => 'be',
 	'shy' => 0,
 	'version' => '1.0.0',
 	'dependencies' => '',
