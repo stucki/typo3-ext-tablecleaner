@@ -6,18 +6,24 @@
 	</meta>
 	<data type='array'>
 		<languageKey index='default' type='array'>
-			<label index='tasks.clean.title'>Table Cleaner</label>
-			<label index='tasks.clean.description'>Removes deleted records older than N days from tables.</label>
-			<label index='tasks.clean.dayLimit'>Remove deleted records older than given days</label>
-			<label index='tasks.clean.tables'>Tables</label>
-			<label index='tasks.clean.invalidTables'>You somehow selected invalid tables</label>
-			<label index='tasks.clean.additionalInformation'>Remove deleted records older than %s days from tables: %s</label>
-			<label index='tasks.truncate.title'>Table Truncater</label>
-			<label index='tasks.truncate.description'>Removes records older than N days from tables.</label>
-			<label index='tasks.truncate.dayLimit'>Remove records older than given days</label>
-			<label index='tasks.truncate.tables'>Tables</label>
-			<label index='tasks.truncate.invalidTables'>You somehow selected invalid tables</label>
-			<label index='tasks.truncate.additionalInformation'>Remove records older than %s days from tables: %s</label>
+			<label index='tasks.deleted.title'>Table Cleaner: remove deleted entries</label>
+			<label index='tasks.deleted.description'>Removes deleted entries older than N days from tables.</label>
+			<label index='tasks.deleted.dayLimit'>Remove deleted entries older than given number of days</label>
+			<label index='tasks.deleted.tables'>Tables</label>
+			<label index='tasks.deleted.invalidTables'>You somehow selected invalid tables</label>
+			<label index='tasks.deleted.additionalInformation'>Remove deleted entries older than %s days from tables: %s</label>
+			<label index='tasks.hidden.title'>Table Cleaner: remove hidden entries</label>
+			<label index='tasks.hidden.description'>Removes hidden entries older than N days from tables.</label>
+			<label index='tasks.hidden.dayLimit'>Remove hidden entries older than given number of days</label>
+			<label index='tasks.hidden.tables'>Tables</label>
+			<label index='tasks.hidden.invalidTables'>You somehow selected invalid tables</label>
+			<label index='tasks.hidden.additionalInformation'>Remove hidden entries older than %s days from tables: %s</label>
+			<label index='tasks.expired.title'>Table Cleaner: remove expired entries</label>
+			<label index='tasks.expired.description'>Removes entries older than N days from tables.</label>
+			<label index='tasks.expired.dayLimit'>Delete entries older than given number of days</label>
+			<label index='tasks.expired.tables'>Tables</label>
+			<label index='tasks.expired.invalidTables'>You somehow selected invalid tables</label>
+			<label index='tasks.expired.additionalInformation'>Remove entries older than %s days from tables: %s</label>
 		</languageKey>
 	</data>
 </T3locallang>

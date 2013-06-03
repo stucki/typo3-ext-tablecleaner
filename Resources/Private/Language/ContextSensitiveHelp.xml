@@ -6,14 +6,18 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="task_tableCleaner_tables.alttitle">Tables</label>
-			<label index="task_tableCleaner_tables.description">Select the tables from which you want to remove the deleted records.</label>
-			<label index="task_tableCleaner_dayLimit.alttitle">Retention time</label>
-			<label index="task_tableCleaner_dayLimit.description">Choose the number of days after which the 'deleted' records should be removed from the chosen tables.</label>
-			<label index="task_tableTruncater_tables.alttitle">Tables</label>
-			<label index="task_tableTruncater_tables.description">Select the tables you want to truncate.</label>
-			<label index="task_tableTruncater_dayLimit.alttitle">Retention time</label>
-			<label index="task_tableTruncater_dayLimit.description">Choose the number of days after which the records should be removed from the chosen tables.</label>
+			<label index="task_tableCleanerDeleted_tables.alttitle">Tables</label>
+			<label index="task_tableCleanerDeleted_tables.description">Select the tables from which you want to remove the deleted entries.</label>
+			<label index="task_tableCleanerDeleted_dayLimit.alttitle">Retention time</label>
+			<label index="task_tableCleanerDeleted_dayLimit.description">Choose the number of days after which the 'deleted' entries should be removed from the chosen tables.</label>
+			<label index="task_tableCleanerHidden_tables.alttitle">Tables</label>
+			<label index="task_tableCleanerHidden_tables.description">Select the tables from which you want to remove the hidden entries.</label>
+			<label index="task_tableCleanerHidden_dayLimit.alttitle">Retention time</label>
+			<label index="task_tableCleanerHidden_dayLimit.description">Choose the number of days after which the 'hidden' entries should be removed from the chosen tables.</label>
+			<label index="task_tableCleanerExpired_tables.alttitle">Tables</label>
+			<label index="task_tableCleanerExpired_tables.description">Select the tables from which you want to remove the expired entries.</label>
+			<label index="task_tableCleanerExpired_dayLimit.alttitle">Retention time</label>
+			<label index="task_tableCleanerExpired_dayLimit.description">Choose the number of days after which the entries should be removed from the chosen tables.</label>
 		</languageKey>
 	</data>
 </T3locallang>
