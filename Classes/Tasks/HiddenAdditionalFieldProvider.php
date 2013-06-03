@@ -73,7 +73,7 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 
 		$additionalFields[$fieldId] = array(
 			'code' => $fieldHtml,
-			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.hidden.tables',
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.tables',
 			'cshKey' => 'tablecleaner',
 			'cshLabel' => $fieldId,
 		);
@@ -170,11 +170,25 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 				if (!in_array($table, $tables)) {
 					$isValid = FALSE;
 					$schedulerModule->addMessage(
-						$GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.hidden.invalidTables'),
+						$GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.invalidTables'),
 						t3lib_FlashMessage::ERROR
 					);
 				}
 			}
+		} else {
+			$isValid = FALSE;
+			$schedulerModule->addMessage(
+				$GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.noTables'),
+				t3lib_FlashMessage::ERROR
+			);
+		}
+
+		if ($submittedData['scheduler_tableCleanerHidden_dayLimit'] <= 0) {
+			$isValid = FALSE;
+			$schedulerModule->addMessage(
+				$GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.invalidNumberOfDays'),
+				t3lib_FlashMessage::ERROR
+			);
 		}
 
 		return $isValid;

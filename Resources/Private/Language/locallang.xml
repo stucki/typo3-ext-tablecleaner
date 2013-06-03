@@ -9,21 +9,19 @@
 			<label index='tasks.deleted.title'>Table Cleaner: remove deleted entries</label>
 			<label index='tasks.deleted.description'>Removes deleted entries older than N days from tables.</label>
 			<label index='tasks.deleted.dayLimit'>Remove deleted entries older than given number of days</label>
-			<label index='tasks.deleted.tables'>Tables</label>
-			<label index='tasks.deleted.invalidTables'>You somehow selected invalid tables</label>
 			<label index='tasks.deleted.additionalInformation'>Remove deleted entries older than %s days from tables: %s</label>
-			<label index='tasks.hidden.title'>Table Cleaner: remove hidden entries</label>
-			<label index='tasks.hidden.description'>Removes hidden entries older than N days from tables.</label>
-			<label index='tasks.hidden.dayLimit'>Remove hidden entries older than given number of days</label>
-			<label index='tasks.hidden.tables'>Tables</label>
-			<label index='tasks.hidden.invalidTables'>You somehow selected invalid tables</label>
-			<label index='tasks.hidden.additionalInformation'>Remove hidden entries older than %s days from tables: %s</label>
 			<label index='tasks.expired.title'>Table Cleaner: remove expired entries</label>
 			<label index='tasks.expired.description'>Removes entries older than N days from tables.</label>
 			<label index='tasks.expired.dayLimit'>Delete entries older than given number of days</label>
-			<label index='tasks.expired.tables'>Tables</label>
-			<label index='tasks.expired.invalidTables'>You somehow selected invalid tables</label>
 			<label index='tasks.expired.additionalInformation'>Remove entries older than %s days from tables: %s</label>
+			<label index='tasks.general.tables'>Tables</label>
+			<label index='tasks.general.noTables'>Please select one or more tables</label>
+			<label index='tasks.general.invalidTables'>You somehow selected a table that is not available</label>
+			<label index='tasks.general.invalidNumberOfDays'>Please enter a valid number of days</label>
+			<label index='tasks.hidden.title'>Table Cleaner: remove hidden entries</label>
+			<label index='tasks.hidden.description'>Removes hidden entries older than N days from tables.</label>
+			<label index='tasks.hidden.dayLimit'>Remove hidden entries older than given number of days</label>
+			<label index='tasks.hidden.additionalInformation'>Remove hidden entries older than %s days from tables: %s</label>
 		</languageKey>
 	</data>
 </T3locallang>
