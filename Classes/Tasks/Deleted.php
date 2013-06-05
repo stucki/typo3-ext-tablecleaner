@@ -111,11 +111,8 @@ class tx_tablecleaner_tasks_Deleted extends tx_scheduler_Task {
 	 * @return   string   Information to display
 	 */
 	public function getAdditionalInformation() {
-		if (count($this->tables)) {
-			$string = $GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.deleted.additionalInformation');
-			return sprintf($string, intval($this->dayLimit), implode(', ', $this->tables));
-		}
-		return '';
+		$string = $GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.deleted.additionalInformation');
+		return sprintf($string, intval($this->dayLimit), implode(', ', $this->tables));
 	}
 
 }

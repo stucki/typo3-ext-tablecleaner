@@ -15,13 +15,31 @@
 			<label index='tasks.expired.dayLimit'>Delete entries older than given number of days</label>
 			<label index='tasks.expired.additionalInformation'>Remove entries older than %s days from tables: %s</label>
 			<label index='tasks.general.tables'>Tables</label>
-			<label index='tasks.general.noTables'>Please select one or more tables</label>
+			<label index='tasks.general.noTables'>Please select one or more tables to clean</label>
 			<label index='tasks.general.invalidTables'>You somehow selected a table that is not available</label>
 			<label index='tasks.general.invalidNumberOfDays'>Please enter a valid number of days</label>
 			<label index='tasks.hidden.title'>Table Cleaner: remove hidden entries</label>
 			<label index='tasks.hidden.description'>Removes hidden entries older than N days from tables.</label>
 			<label index='tasks.hidden.dayLimit'>Remove hidden entries older than given number of days</label>
 			<label index='tasks.hidden.additionalInformation'>Remove hidden entries older than %s days from tables: %s</label>
+		</languageKey>
+		<languageKey index='nl' type='array'>
+			<label index='tasks.deleted.title'>Tabel Opschonen: verwijderde rijen</label>
+			<label index='tasks.deleted.description'>Verwijdert verwijderde rijen ouder dan N dagen van tabellen.</label>
+			<label index='tasks.deleted.dayLimit'>Verwijder verwijderde rijen ouder dan het opgegeven aantal dagen</label>
+			<label index='tasks.deleted.additionalInformation'>Verwijder verwijderde rijen ouder dan %s dagen van tabellen: %s</label>
+			<label index='tasks.expired.title'>Tabel Opschonen: verouderde rijen</label>
+			<label index='tasks.expired.description'>Verwijdert rijen ouder dan N dagen van tabellen.</label>
+			<label index='tasks.expired.dayLimit'>Verwijder rijen ouder dan het opgegeven aantal dagen</label>
+			<label index='tasks.expired.additionalInformation'>Verwijder rijen ouder dan %s dagen van tabellen: %s</label>
+			<label index='tasks.general.tables'>Tabellen</label>
+			<label index='tasks.general.noTables'>Selecteer een of meer tabellen om op te schonen</label>
+			<label index='tasks.general.invalidTables'>Je hebt niet beschikbare tabellen geselecteerd</label>
+			<label index='tasks.general.invalidNumberOfDays'>Geef een geldig aantal dagen op</label>
+			<label index='tasks.hidden.title'>Tabel Opschonen: verborgen rijen</label>
+			<label index='tasks.hidden.description'>Verwijdert verborgen rijen ouder dan N dagen van tabellen.</label>
+			<label index='tasks.hidden.dayLimit'>Verwijder verborgen rijen ouder dan het opgegeven aantal dagen</label>
+			<label index='tasks.hidden.additionalInformation'>Verwijder verborgen rijen ouder dan %s dagen van tabellen: %s</label>
 		</languageKey>
 	</data>
 </T3locallang>
