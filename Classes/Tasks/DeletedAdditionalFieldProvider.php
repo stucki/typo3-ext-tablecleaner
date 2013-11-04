@@ -37,16 +37,19 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 	 * Render additional information fields within the scheduler backend.
 	 *
 	 * @param  array  $taskInfo
-	 * @param  task  $task: task object
+	 * @param  tx_tablecleaner_tasks_Deleted  $task: task object
 	 * @param  tx_scheduler_Module  $schedulerModule: reference to the calling object (BE module of the Scheduler)
 	 * @internal  param array $taksInfo : array information of task to return
 	 * @return  array      additional fields
 	 * @see interfaces/tx_scheduler_AdditionalFieldProvider#getAdditionalFields($taskInfo, $task, $schedulerModule)
 	 */
-	public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $schedulerModule) {
+	public function getAdditionalFields(
+		array &$taskInfo,
+		$task,
+		tx_scheduler_Module $schedulerModule) {
 		$additionalFields = array();
 
-			// Initialize selected fields
+			// tables
 		if (empty($taskInfo['scheduler_tableCleanerDeleted_tables'])) {
 			$taskInfo['scheduler_tableCleanerDeleted_tables'] = array();
 			if ($schedulerModule->CMD == 'add') {
@@ -78,11 +81,10 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 			'cshLabel' => $fieldId,
 		);
 
+			// daylimit
 		if (empty($taskInfo['scheduler_tableCleanerDeleted_dayLimit'])) {
 			if ($schedulerModule->CMD == 'add') {
 				$taskInfo['scheduler_tableCleanerDeleted_dayLimit'] = '31';
-			} elseif ($schedulerModule->CMD == 'edit') {
-				$taskInfo['scheduler_tableCleanerDeleted_dayLimit'] = $task->getDayLimit();
 			} else {
 				$taskInfo['scheduler_tableCleanerDeleted_dayLimit'] = $task->getDayLimit();
 			}
@@ -95,6 +97,42 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.deleted.dayLimit',
 			'cshKey' => 'tablecleaner',
 			'cshLabel' => $fieldId,
+		);
+
+			// exclude pages list
+		if (empty($taskInfo['scheduler_tableCleanerDeleted_excludePages'])) {
+			if ($schedulerModule->CMD == 'add') {
+				$taskInfo['scheduler_tableCleanerDeleted_excludePages'] = '';
+			} else {
+				$taskInfo['scheduler_tableCleanerDeleted_excludePages'] = $task->getExcludePages();
+			}
+		}
+
+		$fieldId = 'task_tableCleanerDeleted_excludePages';
+		$fieldCode = '<input type="text" name="tx_scheduler[scheduler_tableCleanerDeleted_excludePages]"  id="' . $fieldId . '" value="' . htmlspecialchars($taskInfo['scheduler_tableCleanerDeleted_excludePages']) . '"/>';
+		$additionalFields[$fieldId] = array(
+			'code' => $fieldCode,
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.excludePages',
+			'cshKey' => 'tablecleaner',
+			'cshLabel' => 'task_tableCleanerGeneral_excludePages',
+		);
+
+			// exclude pages recursive
+		if (empty($taskInfo['task_tableCleanerDeleted_excludePagesRecursive'])) {
+			if ($schedulerModule->CMD == 'add') {
+				$taskInfo['task_tableCleanerDeleted_excludePagesRecursive'] = '';
+			} else {
+				$taskInfo['task_tableCleanerDeleted_excludePagesRecursive'] = $task->getExcludePagesRecursive();
+			}
+		}
+
+		$fieldId = 'task_tableCleanerDeleted_excludePagesRecursive';
+		$fieldCode = '<input type="checkbox" name="tx_scheduler[scheduler_tableCleanerDeleted_excludePagesRecursive]"  id="' . $fieldId . '" value="1" ' . (intval($taskInfo['scheduler_tableCleanerDeleted_excludePagesRecursive']) ? ' checked="checked"' : '') . '/>';
+		$additionalFields[$fieldId] = array(
+			'code' => $fieldCode,
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.excludePagesRecursive',
+			'cshKey' => 'tablecleaner',
+			'cshLabel' => 'task_tableCleanerGeneral_excludePagesRecursive',
 		);
 
 		return $additionalFields;
@@ -128,7 +166,7 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 	/**
 	 * Get all tables
 	 *
-	 * @return array Registered backends
+	 * @return array $tables  The tables
 	 */
 	protected function getTables() {
 		$tables = array();
@@ -191,6 +229,12 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 			);
 		}
 
+		$submittedData['scheduler_tableCleanerDeleted_excludePages'] =
+			preg_replace('/[^0-9,]/', '', $submittedData['scheduler_tableCleanerDeleted_excludePages']);
+
+		$submittedData['scheduler_tableCleanerDeleted_excludePagesRecursive'] =
+			intval($submittedData['scheduler_tableCleanerDeleted_excludePagesRecursive']);
+
 		return $isValid;
 	}
 
@@ -204,13 +248,15 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 	 */
 	public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
 		$task->setDayLimit(intval($submittedData['scheduler_tableCleanerDeleted_dayLimit']));
+		$task->setExcludePages($submittedData['scheduler_tableCleanerDeleted_excludePages']);
+		$task->setExcludePagesRecursive($submittedData['scheduler_tableCleanerDeleted_excludePagesRecursive']);
 		$task->setTables($submittedData['scheduler_tableCleanerDeleted_tables']);
 	}
-
 }
 
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/DeletedAdditionalFieldProvider.php'])) {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/DeletedAdditionalFieldProvider.php']);
+if (defined('TYPO3_MODE') &&
+	isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/DeletedAdditionalFieldProvider.php'])) {
+	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/DeletedAdditionalFieldProvider.php']);
 }
 
 ?>

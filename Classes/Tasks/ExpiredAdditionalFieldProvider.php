@@ -37,7 +37,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 	 * Render additional information fields within the scheduler backend.
 	 *
 	 * @param  array  $taskInfo
-	 * @param  task  $task: task object
+	 * @param  tx_tablecleaner_tasks_Expired  $task: task object
 	 * @param  tx_scheduler_Module  $schedulerModule: reference to the calling object (BE module of the Scheduler)
 	 * @internal  param array $taksInfo : array information of task to return
 	 * @return  array      additional fields
@@ -46,7 +46,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 	public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $schedulerModule) {
 		$additionalFields = array();
 
-			// Initialize selected fields
+			// tables
 		if (empty($taskInfo['scheduler_tableCleanerExpired_tables'])) {
 			$taskInfo['scheduler_tableCleanerExpired_tables'] = array();
 			if ($schedulerModule->CMD == 'add') {
@@ -78,6 +78,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 			'cshLabel' => $fieldId,
 		);
 
+			// day limit
 		if (empty($taskInfo['scheduler_tableCleanerExpired_dayLimit'])) {
 			if ($schedulerModule->CMD == 'add') {
 				$taskInfo['scheduler_tableCleanerExpired_dayLimit'] = '31';
@@ -95,6 +96,42 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.expired.dayLimit',
 			'cshKey' => 'tablecleaner',
 			'cshLabel' => $fieldId,
+		);
+
+			// exclude pages list
+		if (empty($taskInfo['scheduler_tableCleanerExpired_excludePages'])) {
+			if ($schedulerModule->CMD == 'add') {
+				$taskInfo['scheduler_tableCleanerExpired_excludePages'] = '';
+			} else {
+				$taskInfo['scheduler_tableCleanerExpired_excludePages'] = $task->getExcludePages();
+			}
+		}
+
+		$fieldId = 'task_tableCleanerExpired_excludePages';
+		$fieldCode = '<input type="text" name="tx_scheduler[scheduler_tableCleanerExpired_excludePages]"  id="' . $fieldId . '" value="' . htmlspecialchars($taskInfo['scheduler_tableCleanerExpired_excludePages']) . '"/>';
+		$additionalFields[$fieldId] = array(
+			'code' => $fieldCode,
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.excludePages',
+			'cshKey' => 'tablecleaner',
+			'cshLabel' => 'task_tableCleanerGeneral_excludePages',
+		);
+
+			// exclude pages recursive
+		if (empty($taskInfo['task_tableCleanerExpired_excludePagesRecursive'])) {
+			if ($schedulerModule->CMD == 'add') {
+				$taskInfo['task_tableCleanerExpired_excludePagesRecursive'] = '';
+			} else {
+				$taskInfo['task_tableCleanerExpired_excludePagesRecursive'] = $task->getExcludePagesRecursive();
+			}
+		}
+
+		$fieldId = 'task_tableCleanerExpired_excludePagesRecursive';
+		$fieldCode = '<input type="checkbox" name="tx_scheduler[scheduler_tableCleanerExpired_excludePagesRecursive]"  id="' . $fieldId . '" value="1" ' . (intval($taskInfo['scheduler_tableCleanerExpired_excludePagesRecursive']) ? ' checked="checked"' : '') . '/>';
+		$additionalFields[$fieldId] = array(
+			'code' => $fieldCode,
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.excludePagesRecursive',
+			'cshKey' => 'tablecleaner',
+			'cshLabel' => 'task_tableCleanerGeneral_excludePagesRecursive',
 		);
 
 		return $additionalFields;
@@ -128,7 +165,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 	/**
 	 * Get all tables
 	 *
-	 * @return array Registered backends
+	 * @return array $tables  The tables
 	 */
 	protected function getTables() {
 		$tables = array();
@@ -189,6 +226,12 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 			);
 		}
 
+		$submittedData['scheduler_tableCleanerExpired_excludePages'] =
+			preg_replace('/[^0-9,]/', '', $submittedData['scheduler_tableCleanerExpired_excludePages']);
+
+		$submittedData['scheduler_tableCleanerExpired_excludePagesRecursive'] =
+			intval($submittedData['scheduler_tableCleanerExpired_excludePagesRecursive']);
+
 		return $isValid;
 	}
 
@@ -202,13 +245,15 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 	 */
 	public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
 		$task->setDayLimit(intval($submittedData['scheduler_tableCleanerExpired_dayLimit']));
+		$task->setExcludePages($submittedData['scheduler_tableCleanerExpired_excludePages']);
+		$task->setExcludePagesRecursive($submittedData['scheduler_tableCleanerExpired_excludePagesRecursive']);
 		$task->setTables($submittedData['scheduler_tableCleanerExpired_tables']);
 	}
-
 }
 
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php'])) {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php']);
+if (defined('TYPO3_MODE') &&
+	isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php'])) {
+	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php']);
 }
 
 ?>

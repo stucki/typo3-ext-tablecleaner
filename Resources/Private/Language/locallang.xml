@@ -14,6 +14,10 @@
 			<label index='tasks.expired.description'>Removes entries older than N days from tables.</label>
 			<label index='tasks.expired.dayLimit'>Delete entries older than given number of days</label>
 			<label index='tasks.expired.additionalInformation'>Remove entries older than %s days from tables: %s</label>
+			<label index='tasks.general.additionalInformationExclude'> except from pages %s</label>
+			<label index='tasks.general.additionalInformationExcludeRecursive'> recursively</label>
+			<label index='tasks.general.excludePages'>Comma separated list of page id's to exclude from cleaning</label>
+			<label index='tasks.general.excludePagesRecursive'>Also exclude the children of selected page id's</label>
 			<label index='tasks.general.tables'>Tables</label>
 			<label index='tasks.general.noTables'>Please select one or more tables to clean</label>
 			<label index='tasks.general.invalidTables'>You somehow selected a table that is not available</label>
@@ -26,12 +30,16 @@
 		<languageKey index='nl' type='array'>
 			<label index='tasks.deleted.title'>Tabel Opschonen: verwijderde rijen</label>
 			<label index='tasks.deleted.description'>Verwijdert verwijderde rijen ouder dan N dagen van tabellen.</label>
-			<label index='tasks.deleted.dayLimit'>Verwijder verwijderde rijen ouder dan het opgegeven aantal dagen</label>
-			<label index='tasks.deleted.additionalInformation'>Verwijder verwijderde rijen ouder dan %s dagen van tabellen: %s</label>
+			<label index='tasks.deleted.dayLimit'>Verwijder 'verwijderde' rijen ouder dan het opgegeven aantal dagen</label>
+			<label index='tasks.deleted.additionalInformation'>Verwijder 'verwijderde' rijen ouder dan %s dagen van tabellen: %s</label>
 			<label index='tasks.expired.title'>Tabel Opschonen: verouderde rijen</label>
 			<label index='tasks.expired.description'>Verwijdert rijen ouder dan N dagen van tabellen.</label>
 			<label index='tasks.expired.dayLimit'>Verwijder rijen ouder dan het opgegeven aantal dagen</label>
 			<label index='tasks.expired.additionalInformation'>Verwijder rijen ouder dan %s dagen van tabellen: %s</label>
+			<label index='tasks.general.additionalInformationExclude'> behalve van pagina's %s</label>
+			<label index='tasks.general.additionalInformationExcludeRecursive'> en onderliggende pagina's</label>
+			<label index='tasks.general.excludePages'>Kommagescheiden lijst van pagina id's die worden uitgesloten van opschoning</label>
+			<label index='tasks.general.excludePagesRecursive'>Sluit ook onderliggende pagina's uit</label>
 			<label index='tasks.general.tables'>Tabellen</label>
 			<label index='tasks.general.noTables'>Selecteer een of meer tabellen om op te schonen</label>
 			<label index='tasks.general.invalidTables'>Je hebt niet beschikbare tabellen geselecteerd</label>

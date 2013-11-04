@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "tablecleaner".
  *
- * Auto generated 05-06-2013 07:56
+ * Auto generated 21-10-2013 09:42
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -41,7 +41,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'suggests' => array(
 		),
 	),
-	'_md5_values_when_last_written' => 'a:13:{s:16:"ext_autoload.php";s:4:"c9f6";s:12:"ext_icon.gif";s:4:"62c8";s:17:"ext_localconf.php";s:4:"b130";s:14:"ext_tables.php";s:4:"8a8d";s:25:"Classes/Tasks/Deleted.php";s:4:"6c98";s:48:"Classes/Tasks/DeletedAdditionalFieldProvider.php";s:4:"07d0";s:25:"Classes/Tasks/Expired.php";s:4:"03e6";s:48:"Classes/Tasks/ExpiredAdditionalFieldProvider.php";s:4:"d802";s:24:"Classes/Tasks/Hidden.php";s:4:"5b6a";s:47:"Classes/Tasks/HiddenAdditionalFieldProvider.php";s:4:"33b5";s:51:"Resources/Private/Language/ContextSensitiveHelp.xml";s:4:"4f33";s:40:"Resources/Private/Language/locallang.xml";s:4:"5da6";s:14:"doc/manual.sxw";s:4:"b3e4";}',
+	'_md5_values_when_last_written' => 'a:14:{s:16:"ext_autoload.php";s:4:"a5a3";s:12:"ext_icon.gif";s:4:"62c8";s:17:"ext_localconf.php";s:4:"b130";s:14:"ext_tables.php";s:4:"8a8d";s:22:"Classes/Tasks/Base.php";s:4:"b509";s:25:"Classes/Tasks/Deleted.php";s:4:"0d04";s:48:"Classes/Tasks/DeletedAdditionalFieldProvider.php";s:4:"3b14";s:25:"Classes/Tasks/Expired.php";s:4:"f6db";s:48:"Classes/Tasks/ExpiredAdditionalFieldProvider.php";s:4:"0415";s:24:"Classes/Tasks/Hidden.php";s:4:"15b3";s:47:"Classes/Tasks/HiddenAdditionalFieldProvider.php";s:4:"ddfb";s:51:"Resources/Private/Language/ContextSensitiveHelp.xml";s:4:"10d3";s:40:"Resources/Private/Language/locallang.xml";s:4:"eebe";s:14:"doc/manual.sxw";s:4:"4263";}',
 	'suggests' => array(
 	),
 );

@@ -18,6 +18,10 @@
 			<label index="task_tableCleanerExpired_tables.description">Select the tables from which you want to remove the expired entries.</label>
 			<label index="task_tableCleanerExpired_dayLimit.alttitle">Retention time</label>
 			<label index="task_tableCleanerExpired_dayLimit.description">Choose the number of days after which the entries should be removed from the chosen tables.</label>
+			<label index='task_tableCleanerGeneral_excludePages.alttitle'>Exclude pages</label>
+			<label index='task_tableCleanerGeneral_excludePages.description'>Comma separated list of page id's to exclude when cleaning tables. For records that are attached to a page (have a pid field), they will not be cleaned when attached to a page in the list. For the pages table, the page will not be cleaned when the uid of the page is in the list.</label>
+			<label index='task_tableCleanerGeneral_excludePagesRecursive.alttitle'>Exclude pages recursively</label>
+			<label index='task_tableCleanerGeneral_excludePagesRecursive.description'>Also exclude all child pages of the given page list from the cleaning process.</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
 			<label index="task_tableCleanerDeleted_tables.alttitle">Tabellen</label>
@@ -32,6 +36,10 @@
 			<label index="task_tableCleanerExpired_tables.description">Selecteer de tabellen waaruit de rijden moeten worden verwijderd.</label>
 			<label index="task_tableCleanerExpired_dayLimit.alttitle">Retentie tijd</label>
 			<label index="task_tableCleanerExpired_dayLimit.description">Het aantal dagen waarna de rijen uit de tabel worden verwijderd.</label>
+			<label index='task_tableCleanerGeneral_excludePages.alttitle'>Pagina's uitsluiten</label>
+			<label index='task_tableCleanerGeneral_excludePages.description'>Kommagescheiden lijst van pagina id's die worden uitgesloten van opschoning. Rijen die gekoppeld zijn aan een pagina (een pid veld hebben) zullen niet worden opgeschoond als het pid voorkomt in de lijst. Bij het opschonen van de 'pages' tabel, zal de pagina niet worden opgeschoond als het uid veld voorkomt in de lijst.</label>
+			<label index='task_tableCleanerGeneral_excludePagesRecursive.alttitle'>Pagina's recursief uitsluiten</label>
+			<label index='task_tableCleanerGeneral_excludePagesRecursive.description'>Ook onderliggende pagina's uit de lijst worden uitgesloten van opschoning.</label>
 		</languageKey>
 	</data>
 </T3locallang>

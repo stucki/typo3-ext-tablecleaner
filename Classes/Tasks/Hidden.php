@@ -31,59 +31,7 @@
  * @license http://opensource.org/licenses/gpl-license.php
  *    GNU Public License, version 2
  */
-class tx_tablecleaner_tasks_Hidden extends tx_scheduler_Task {
-
-	/**
-	 * Array of tables
-	 *
-	 * @var array
-	 */
-	protected $tables;
-
-	/**
-	 * Days
-	 *
-	 * @var integer
-	 */
-	protected $dayLimit;
-
-	/**
-	 * Get the value of the protected property tables.
-	 *
-	 * @return string  Comma separated list of tables
-	 */
-	public function getTables() {
-		return $this->tables;
-	}
-
-	/**
-	 * Set the value of the private property tables.
-	 *
-	 * @param string $tables Comma separated list of tables
-	 * @return void
-	 */
-	public function setTables($tables) {
-		$this->tables = $tables;
-	}
-
-	/**
-	 * Get the value of the protected property dayLimit.
-	 *
-	 * @return integer dayLimit
-	 */
-	public function getDayLimit() {
-		return $this->dayLimit;
-	}
-
-	/**
-	 * Set the value of the private property dayLimit.
-	 *
-	 * @param integer $dayLimit Number of days after which to remove the records
-	 * @return void
-	 */
-	public function setDayLimit($dayLimit) {
-		$this->dayLimit = $dayLimit;
-	}
+class tx_tablecleaner_tasks_Hidden extends tx_tablecleaner_tasks_Base {
 
 	/**
 	 * Function executed from the Scheduler.
@@ -93,8 +41,34 @@ class tx_tablecleaner_tasks_Hidden extends tx_scheduler_Task {
 	public function execute() {
 		$successfullyExecuted = TRUE;
 		$timestamp = strtotime('-' . intval($this->dayLimit) . 'days');
+		$excludePages = $this->getExcludePages();
+		$excludePagesRecursive = $this->getExcludePagesRecursive();
+		$tablesWithPid = $this->getTablesWithPid();
+
+		if ($excludePages !== '') {
+			if ($excludePagesRecursive) {
+				$pages = array();
+				$pageArray = explode(',', $excludePages);
+				foreach ($pageArray as $pageId) {
+					$pages = array_merge($pages, $this->fetchChildPages($pageId));
+				}
+				$pages = array_unique($pages);
+				$excludePages = implode(',', $pages);
+			}
+		}
+
 		foreach ($this->tables as $table) {
-			$where = 'hidden = 1 AND tstamp < ' . $timestamp;
+			if (in_array($table, $tablesWithPid) AND $excludePages != '') {
+				if ($table == 'pages') {
+					$where = 'hidden = 1 AND tstamp < ' . $timestamp .
+						' AND NOT uid IN(' . $excludePages . ')';
+				} else {
+					$where = 'hidden = 1 AND tstamp < ' . $timestamp .
+						' AND NOT pid IN(' . $excludePages . ')';
+				}
+			} else {
+				$where = 'hidden = 1 AND tstamp < ' . $timestamp;
+			}
 			$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $where);
 			$error = $GLOBALS['TYPO3_DB']->sql_error();
 			if ($error) {
@@ -112,9 +86,16 @@ class tx_tablecleaner_tasks_Hidden extends tx_scheduler_Task {
 	 */
 	public function getAdditionalInformation() {
 		$string = $GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.hidden.additionalInformation');
-		return sprintf($string, intval($this->dayLimit), implode(', ', $this->tables));
+		$message = sprintf($string, intval($this->dayLimit), implode(', ', $this->tables));
+		if ($this->excludePages != '') {
+			$string = $GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.additionalInformationExclude');
+			$message .= sprintf($string, $this->excludePages);
+			if ($this->excludePagesRecursive) {
+				$message .= $GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.additionalInformationExcludeRecursive');
+			}
+		}
+		return $message;
 	}
-
 }
 
 if (defined('TYPO3_MODE')
