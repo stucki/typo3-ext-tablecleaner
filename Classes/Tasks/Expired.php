@@ -41,30 +41,17 @@ class tx_tablecleaner_tasks_Expired extends tx_tablecleaner_tasks_Base {
 	public function execute() {
 		$successfullyExecuted = TRUE;
 		$timestamp = strtotime('-' . intval($this->dayLimit) . 'days');
-		$excludePages = $this->getExcludePages();
-		$excludePagesRecursive = $this->getExcludePagesRecursive();
+		$excludePages = $this->fetchExcludedPages();
 		$tablesWithPid = $this->getTablesWithPid();
 
-		if ($excludePages !== '') {
-			if ($excludePagesRecursive) {
-				$pages = array();
-				$pageArray = explode(',', $excludePages);
-				foreach ($pageArray as $pageId) {
-					$pages = array_merge($pages, $this->fetchChildPages($pageId));
-				}
-				$pages = array_unique($pages);
-				$excludePages = implode(',', $pages);
-			}
-		}
-
 		foreach ($this->tables as $table) {
-			if (in_array($table, $tablesWithPid) AND $excludePages != '') {
+			if (in_array($table, $tablesWithPid) AND count($excludePages)) {
 				if ($table == 'pages') {
 					$where = 'tstamp < ' . $timestamp .
-						' AND NOT uid IN(' . $excludePages . ')';
+						' AND NOT uid IN(' . implode(',', $excludePages) . ')';
 				} else {
 					$where = 'tstamp < ' . $timestamp .
-						' AND NOT pid IN(' . $excludePages . ')';
+						' AND NOT pid IN(' . implode(',', $excludePages) . ')';
 				}
 			} else {
 				$where = 'AND tstamp < ' . $timestamp;
@@ -87,13 +74,6 @@ class tx_tablecleaner_tasks_Expired extends tx_tablecleaner_tasks_Base {
 	public function getAdditionalInformation() {
 		$string = $GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.expired.additionalInformation');
 		$message = sprintf($string, intval($this->dayLimit), implode(', ', $this->tables));
-		if ($this->excludePages != '') {
-			$string = $GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.additionalInformationExclude');
-			$message .= sprintf($string, $this->excludePages);
-			if ($this->excludePagesRecursive) {
-				$message .= $GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.additionalInformationExcludeRecursive');
-			}
-		}
 		return $message;
 	}
 }

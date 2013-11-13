@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'tablecleaner'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="pages.tx_tablecleaner_exclude">Exclude page from tablecleaner</label>
+			<label index='pages.tx_tablecleaner_exclude_branch'>Exclude branch from tablecleaner</label>
+		</languageKey>
+		<languageKey index="nl" type="array">
+			<label index="pages.tx_tablecleaner_exclude">Pagina uitsluiten van opschoning</label>
+			<label index='pages.tx_tablecleaner_exclude_branch'>Tak uitsluiten van opschoning</label>
+		</languageKey>
+	</data>
+</T3locallang>

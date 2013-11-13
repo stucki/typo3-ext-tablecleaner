@@ -98,42 +98,6 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 			'cshLabel' => $fieldId,
 		);
 
-			// exclude pages list
-		if (empty($taskInfo['scheduler_tableCleanerHidden_excludePages'])) {
-			if ($schedulerModule->CMD == 'add') {
-				$taskInfo['scheduler_tableCleanerHidden_excludePages'] = '';
-			} else {
-				$taskInfo['scheduler_tableCleanerHidden_excludePages'] = $task->getExcludePages();
-			}
-		}
-
-		$fieldId = 'task_tableCleanerHidden_excludePages';
-		$fieldCode = '<input type="text" name="tx_scheduler[scheduler_tableCleanerHidden_excludePages]"  id="' . $fieldId . '" value="' . htmlspecialchars($taskInfo['scheduler_tableCleanerHidden_excludePages']) . '"/>';
-		$additionalFields[$fieldId] = array(
-			'code' => $fieldCode,
-			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.excludePages',
-			'cshKey' => 'tablecleaner',
-			'cshLabel' => 'task_tableCleanerGeneral_excludePages',
-		);
-
-			// exclude pages recursive
-		if (empty($taskInfo['task_tableCleanerHidden_excludePagesRecursive'])) {
-			if ($schedulerModule->CMD == 'add') {
-				$taskInfo['task_tableCleanerHidden_excludePagesRecursive'] = '';
-			} else {
-				$taskInfo['task_tableCleanerHidden_excludePagesRecursive'] = $task->getExcludePagesRecursive();
-			}
-		}
-
-		$fieldId = 'task_tableCleanerHidden_excludePagesRecursive';
-		$fieldCode = '<input type="checkbox" name="tx_scheduler[scheduler_tableCleanerHidden_excludePagesRecursive]"  id="' . $fieldId . '" value="1" ' . (intval($taskInfo['scheduler_tableCleanerHidden_excludePagesRecursive']) ? ' checked="checked"' : '') . '/>';
-		$additionalFields[$fieldId] = array(
-			'code' => $fieldCode,
-			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.excludePagesRecursive',
-			'cshKey' => 'tablecleaner',
-			'cshLabel' => 'task_tableCleanerGeneral_excludePagesRecursive',
-		);
-
 		return $additionalFields;
 	}
 
@@ -228,12 +192,6 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 			);
 		}
 
-		$submittedData['scheduler_tableCleanerHidden_excludePages'] =
-			preg_replace('/[^0-9,]/', '', $submittedData['scheduler_tableCleanerHidden_excludePages']);
-
-		$submittedData['scheduler_tableCleanerHidden_excludePagesRecursive'] =
-			intval($submittedData['scheduler_tableCleanerHidden_excludePagesRecursive']);
-
 		return $isValid;
 	}
 
@@ -247,8 +205,6 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 	 */
 	public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
 		$task->setDayLimit(intval($submittedData['scheduler_tableCleanerHidden_dayLimit']));
-		$task->setExcludePages($submittedData['scheduler_tableCleanerHidden_excludePages']);
-		$task->setExcludePagesRecursive($submittedData['scheduler_tableCleanerHidden_excludePagesRecursive']);
 		$task->setTables($submittedData['scheduler_tableCleanerHidden_tables']);
 	}
 }

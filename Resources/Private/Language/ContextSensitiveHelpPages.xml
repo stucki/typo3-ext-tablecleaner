@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>CSH for pages table, specifically tailored for the CMS extension.</description>
+		<type>CSH</type>
+		<csh_table>pages</csh_table>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_tablecleaner_exclude.description">Exclude this page from the tablecleaner cleaning tasks.</label>
+			<label index="tx_tablecleaner_exclude.details">Exclude this page and any records attached to it from the tablecleaner cleaning tasks.</label>
+			<label index="tx_tablecleaner_exclude_branch.description">Exclude this page and any subpages from the tablecleaner cleaning tasks.</label>
+			<label index="tx_tablecleaner_exclude_branch.details">Exclude this page, any subpages and any records attached to them from the tablecleaner cleaning tasks.</label>
+		</languageKey>
+	</data>
+</T3locallang>
