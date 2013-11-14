@@ -6,32 +6,36 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="task_tableCleanerDeleted_tables.alttitle">Tables</label>
-			<label index="task_tableCleanerDeleted_tables.description">Select the tables from which you want to remove the deleted entries.</label>
-			<label index="task_tableCleanerDeleted_dayLimit.alttitle">Retention time</label>
-			<label index="task_tableCleanerDeleted_dayLimit.description">Choose the number of days after which the 'deleted' entries should be removed from the chosen tables.</label>
-			<label index="task_tableCleanerHidden_tables.alttitle">Tables</label>
-			<label index="task_tableCleanerHidden_tables.description">Select the tables from which you want to remove the hidden entries.</label>
-			<label index="task_tableCleanerHidden_dayLimit.alttitle">Retention time</label>
-			<label index="task_tableCleanerHidden_dayLimit.description">Choose the number of days after which the 'hidden' entries should be removed from the chosen tables.</label>
-			<label index="task_tableCleanerExpired_tables.alttitle">Tables</label>
-			<label index="task_tableCleanerExpired_tables.description">Select the tables from which you want to remove the expired entries.</label>
-			<label index="task_tableCleanerExpired_dayLimit.alttitle">Retention time</label>
-			<label index="task_tableCleanerExpired_dayLimit.description">Choose the number of days after which the entries should be removed from the chosen tables.</label>
+			<label index="task_deletedTables.alttitle">Tables</label>
+			<label index="task_deletedTables.description">Select the tables from which you want to remove the deleted entries.</label>
+			<label index="task_deletedDayLimit.alttitle">Retention time</label>
+			<label index="task_deletedDayLimit.description">Choose the number of days after which the 'deleted' entries should be removed from the chosen tables.</label>
+			<label index="task_hiddenTables.alttitle">Tables</label>
+			<label index="task_hiddenTables.description">Select the tables from which you want to remove the hidden entries.</label>
+			<label index="task_dayLimit.alttitle">Retention time</label>
+			<label index="task_dayLimit.description">Choose the number of days after which the 'hidden' entries should be removed from the chosen tables.</label>
+			<label index="task_expiredTables.alttitle">Tables</label>
+			<label index="task_expiredTables.description">Select the tables from which you want to remove the expired entries.</label>
+			<label index="task_dayLimit.alttitle">Retention time</label>
+			<label index="task_dayLimit.description">Choose the number of days after which the entries should be removed from the chosen tables.</label>
+			<label index="task_markAsDeleted.alttitle">Mark as deleted</label>
+			<label index="task_markAsDeleted.description">Instead of removing the records from the table, mark them as deleted. The timestamp of these records will be updated. The records may later be cleaned up by the 'deleted' tablecleaner task.</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
-			<label index="task_tableCleanerDeleted_tables.alttitle">Tabellen</label>
-			<label index="task_tableCleanerDeleted_tables.description">Selecteer de tabellen waaruit de verwijderde rijden moeten worden verwijderd.</label>
-			<label index="task_tableCleanerDeleted_dayLimit.alttitle">Retentie tijd</label>
-			<label index="task_tableCleanerDeleted_dayLimit.description">Het aantal dagen waarna de verwijderde rijen uit de tabel worden verwijderd.</label>
-			<label index="task_tableCleanerHidden_tables.alttitle">Tabellen</label>
-			<label index="task_tableCleanerHidden_tables.description">Selecteer de tabellen waaruit de verborgen rijden moeten worden verwijderd.</label>
-			<label index="task_tableCleanerHidden_dayLimit.alttitle">Retentie tijd</label>
-			<label index="task_tableCleanerHidden_dayLimit.description">Het aantal dagen waarna de verborgen rijen uit de tabel worden verwijderd.</label>
-			<label index="task_tableCleanerExpired_tables.alttitle">Tabellen</label>
-			<label index="task_tableCleanerExpired_tables.description">Selecteer de tabellen waaruit de rijden moeten worden verwijderd.</label>
-			<label index="task_tableCleanerExpired_dayLimit.alttitle">Retentie tijd</label>
-			<label index="task_tableCleanerExpired_dayLimit.description">Het aantal dagen waarna de rijen uit de tabel worden verwijderd.</label>
+			<label index="task_deletedTables.alttitle">Tabellen</label>
+			<label index="task_deletedTables.description">Selecteer de tabellen waaruit de verwijderde rijden moeten worden verwijderd.</label>
+			<label index="task_deletedDayLimit.alttitle">Retentie tijd</label>
+			<label index="task_deletedDayLimit.description">Het aantal dagen waarna de verwijderde rijen uit de tabel worden verwijderd.</label>
+			<label index="task_hiddenTables.alttitle">Tabellen</label>
+			<label index="task_hiddenTables.description">Selecteer de tabellen waaruit de verborgen rijden moeten worden verwijderd.</label>
+			<label index="task_dayLimit.alttitle">Retentie tijd</label>
+			<label index="task_dayLimit.description">Het aantal dagen waarna de verborgen rijen uit de tabel worden verwijderd.</label>
+			<label index="task_expiredTables.alttitle">Tabellen</label>
+			<label index="task_expiredTables.description">Selecteer de tabellen waaruit de rijden moeten worden verwijderd.</label>
+			<label index="task_dayLimit.alttitle">Retentie tijd</label>
+			<label index="task_dayLimit.description">Het aantal dagen waarna de rijen uit de tabel worden verwijderd.</label>
+			<label index="task_markAsDeleted.alttitle">Zet op verwijderd</label>
+			<label index="task_markAsDeleted.description">Markeer de rijen als 'verwijderd' in plaats van ze daadwerkelijk uit de tabel te verwijderen. De timestamp van deze rijen zal worden aangepast. De 'verwijderde rijden' tablecleaner opschoontaak kan ze vervolgens daadwerkelijk verwijderen.</label>
 		</languageKey>
 	</data>
 </T3locallang>

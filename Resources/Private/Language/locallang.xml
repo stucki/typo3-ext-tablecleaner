@@ -17,6 +17,7 @@
 			<label index='tasks.general.additionalInformationExclude'> except from pages %s</label>
 			<label index='tasks.general.additionalInformationExcludeRecursive'> recursively</label>
 			<label index='tasks.general.tables'>Tables</label>
+			<label index='tasks.general.markAsDeleted'>Mark records as 'deleted' instead of removing them from the table</label>
 			<label index='tasks.general.noTables'>Please select one or more tables to clean</label>
 			<label index='tasks.general.invalidTables'>You somehow selected a table that is not available</label>
 			<label index='tasks.general.invalidNumberOfDays'>Please enter a valid number of days</label>
@@ -37,6 +38,7 @@
 			<label index='tasks.general.additionalInformationExclude'> behalve van pagina's %s</label>
 			<label index='tasks.general.additionalInformationExcludeRecursive'> en onderliggende pagina's</label>
 			<label index='tasks.general.tables'>Tabellen</label>
+			<label index='tasks.general.markAsDeleted'>Zet de rijen op 'verwijderd' in plaats van ze daadwerkelijk te verwijderen</label>
 			<label index='tasks.general.noTables'>Selecteer een of meer tabellen om op te schonen</label>
 			<label index='tasks.general.invalidTables'>Je hebt niet beschikbare tabellen geselecteerd</label>
 			<label index='tasks.general.invalidNumberOfDays'>Geef een geldig aantal dagen op</label>

@@ -1,26 +1,25 @@
 <?php
-/***************************************************************
+/*****************************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Michiel Roos <extenstions@donationbasedhosting.org>
+ *  ⓒ 2013 Michiel Roos <michiel@maxserv.nl>
  *  All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ *  This script is part of the TYPO3 project. The TYPO3 project is free
+ *  software; you can redistribute it and/or modify it under the terms of the
+ *  GNU General Public License as published by the Free Software Foundation;
+ *  either version 2 of the License, or (at your option) any later version.
  *
  *  The GNU General Public License can be found at
  *  http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.
+ *  This script is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ *  or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ ****************************************************************************/
 
 /**
  * Base scheduler task
@@ -48,6 +47,13 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	protected $dayLimit;
 
 	/**
+	 * Mark as deleted
+	 *
+	 * @var boolean
+	 */
+	protected $markAsDeleted;
+
+	/**
 	 * Get the value of the protected property tables.
 	 *
 	 * @return array of tables
@@ -59,7 +65,7 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	/**
 	 * Set the value of the private property tables.
 	 *
-	 * @param array of tables
+	 * @param array $tables
 	 * @return void
 	 */
 	public function setTables($tables) {
@@ -86,87 +92,20 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	}
 
 	/**
-	 * Get all tables with a parent id
+	 * @param boolean $markAsDeleted
 	 *
-	 * @return array $tables  The tables
+	 * @return $this to allow for chaining
 	 */
-	protected function getTablesWithPid() {
-		$tables = array();
-		$resource = $GLOBALS['TYPO3_DB']->sql_query(
-			"SELECT TABLE_NAME
-			FROM INFORMATION_SCHEMA.COLUMNS
-			WHERE TABLE_NAME
-			IN ('" . implode ("','", $this->tables) . "')
-			AND COLUMN_NAME = 'pid'
-			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
-		);
-		if (is_resource($resource)) {
-			while ($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource)) {
-				$tables[] = $result['TABLE_NAME'];
-			};
-		}
-		return $tables;
+	public function setMarkAsDeleted($markAsDeleted) {
+		$this->markAsDeleted = $markAsDeleted;
+		return $this;
 	}
 
 	/**
-	 * Fetch child pages
-	 *
-	 * @param integer $pageId
-	 * @return array $pageIds
+	 * @return boolean
 	 */
-	protected function fetchChildPages($pageId) {
-		$res = $GLOBALS['TYPO3_DB']->sql_query('SELECT uid FROM pages WHERE pid = ' . $pageId);
-		$pageIds = array();
-		$pageIds[] = $pageId;
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			$pageIds[] = $row['uid'];
-			$pageIds = array_merge($pageIds, $this->fetchChildPages($row['uid']));
-		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
-		return $pageIds;
-	}
-
-	/**
-	 * Fetch pages that have 'tx_tablecleaner_exclude' or
-	 * 'tx_tablecleaner_exclude_branch'set. If 'tx_tablecleaner_exclude_branch'
-	 * is set, also recursively fetch the children of that page.
-	 *
-	 * @return array $pageIds
-	 */
-	protected function fetchExcludedPages() {
-		$pageIds = array();
-
-			// First fetch the pages that have 'tx_tablecleaner_exclude' set
-		$res = $GLOBALS['TYPO3_DB']->sql_query('
-			SELECT
-				uid
-			FROM
-				pages
-			WHERE
-				tx_tablecleaner_exclude = 1;
-			');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			$pageIds[] = $row['uid'];
-		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
-
-			// Then recursively fetch the pages that have 'tx_tablecleaner_exclude_branch' set
-		$res = $GLOBALS['TYPO3_DB']->sql_query('
-			SELECT
-				uid
-			FROM
-				pages
-			WHERE
-				tx_tablecleaner_exclude_branch = 1;
-			');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			$pageIds = array_merge($pageIds, $this->fetchChildPages($row['uid']));
-		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
-
-		$pageIds = array_unique($pageIds);
-
-		return $pageIds;
+	public function getMarkAsDeleted() {
+		return $this->markAsDeleted;
 	}
 
 	/**

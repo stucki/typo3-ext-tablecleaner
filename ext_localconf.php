@@ -1,7 +1,5 @@
 <?php
-/* $Id$ */
-
-if (!defined ('TYPO3_MODE')) {
+if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 

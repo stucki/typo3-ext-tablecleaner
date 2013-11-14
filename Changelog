@@ -1,0 +1,7 @@
+2013-11-14  Michiel Roos <michiel@maxserv.nl>
+	* [BUGFIX] #53380: Add option to mark hidden records as deleted instead of actually deleting them. The timestamp of the record will be touched and the task that cleans up 'deleted' records will remove them up at a later time.
+	* [TASK] Code cleanup
+
+2013-11-14  Michiel Roos <michiel@maxserv.nl>
+	* [TASK] Move exclusion options to page properties
+

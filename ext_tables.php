@@ -1,11 +1,7 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
+if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
-
-	// Initialize Context Sensitive Help (CSH)
-t3lib_extMgm::addLLrefForTCAdescr('tablecleaner', 'EXT:tablecleaner/Resources/Private/Language/ContextSensitiveHelp.xml');
-t3lib_extMgm::addLLrefForTCAdescr('pages', 'EXT:tablecleaner/Resources/Private/Language/ContextSensitiveHelpPages.xml');
 
 $columnArray = array(
 	'pages' => array(
@@ -35,7 +31,11 @@ $columnArray = array(
 );
 
 t3lib_extMgm::addTCAcolumns('pages', $columnArray['pages']);
+
 t3lib_extMgm::addFieldsToPalette('pages', 'visibility', 'tx_tablecleaner_exclude', 'after:nav_hide');
 t3lib_extMgm::addFieldsToPalette('pages', 'visibility', 'tx_tablecleaner_exclude_branch', 'after:tx_tablecleaner_exclude');
+
+t3lib_extMgm::addLLrefForTCAdescr('tablecleaner', 'EXT:tablecleaner/Resources/Private/Language/ContextSensitiveHelp.xml');
+t3lib_extMgm::addLLrefForTCAdescr('pages', 'EXT:tablecleaner/Resources/Private/Language/ContextSensitiveHelpPages.xml');
 
 ?>
