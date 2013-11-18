@@ -1,0 +1,26 @@
+/**
+ * Extbase configuration
+ */
+config.tx_extbase {
+	persistence {
+		classes {
+			Tx_Tablecleaner_Domain_Model_Page {
+				mapping {
+					tableName = pages
+					columns {
+						tx_tablecleaner_exclude.mapOnProperty = exclude
+						tx_tablecleaner_exclude_branch.mapOnProperty = excludeBranch
+					}
+				}
+			}
+		}
+	}
+}
+
+module.tx_tablecleaner {
+	view {
+		templateRootPath = EXT:tablecleaner/Resources/Private/Backend/Templates/
+		partialRootPath = EXT:tablecleaner/Resources/Private/Partials/
+		layoutRootPath = EXT:tablecleaner/Resources/Private/Backend/Layouts/
+	}
+}

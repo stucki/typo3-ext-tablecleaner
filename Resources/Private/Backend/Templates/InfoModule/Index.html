@@ -1,0 +1,76 @@
+{namespace tablecleaner=Tx_Tablecleaner_ViewHelpers}
+<f:layout name="Default"/>
+
+<f:section name="iconButtons">
+</f:section>
+
+<f:section name="content">
+	<h2><f:translate key="module.title" /></h2>
+	<f:if condition="{startingPage.uid}">
+		<p><f:translate key="module.startingPoint" arguments="{title: startingPage.title, pageId: startingPage.uid}" /></p>
+	</f:if>
+	<h3><f:translate key="module.subTitle" /></h3>
+	<p><f:translate key="module.description" /><br/></p>
+	<div class="t3-form-palette-fieldset">
+		<table class="typo3-TCEforms">
+			<tr>
+				<td>
+					<div class="typo3-dyntabmenu-divs">
+						<table class="wrapperTable">
+							<tr class="class-main2">
+								<td class="palette-header">
+									<table border="0" id="typo3-tree">
+										<f:for each="{tree}" as="row">
+											<tr>
+												<td id="row{row.row.uid}_{row.bank}" class="treeIcons {row.row._CSSCLASS}">
+													<tablecleaner:format.replace search="?PM" replace="&PM">
+														<tablecleaner:format.raw value="{row.HTML}"/>
+													</tablecleaner:format.replace>
+													<a href="alt_doc.php?returnUrl=/typo3/sysext/cms/layout/db_layout.php?id={row.row.uid}&edit[pages][{row.row.uid}]=edit" class="linkToPage">
+														<f:format.crop maxCharacters="{titleLength}">{row.row.title}</f:format.crop>
+													</a>
+												</td>
+												<f:if condition="{row.row.tx_tablecleaner_exclude}">
+													<f:then>
+														<td class="exclude" title="{f:translate(key: 'module.usage.exclude')}">
+															<a href="alt_doc.php?returnUrl=/typo3/sysext/cms/layout/db_layout.php?id={row.row.uid}&edit[pages][{row.row.uid}]=edit">✔</a>
+														</td>
+													</f:then>
+													<f:else>
+														<td></td>
+													</f:else>
+												</f:if>
+												<f:if condition="{row.row.tx_tablecleaner_exclude_branch}">
+													<f:then>
+														<td class="excludeBranch" title="{f:translate(key: 'module.usage.excludeBranch')}">
+															<a href="alt_doc.php?returnUrl=/typo3/sysext/cms/layout/db_layout.php?id={row.row.uid}&edit[pages][{row.row.uid}]=edit">✔</a>
+														</td>
+													</f:then>
+													<f:else>
+														<td></td>
+													</f:else>
+												</f:if>
+											</tr>
+										</f:for>
+									</table>
+									<h3><f:translate key="module.usage" /></h3>
+									<p><f:translate key="module.usage.description" /></p>
+									<table>
+										<tr>
+											<td class="exclude">✔</td>
+											<td class="usageText"><f:translate key="module.usage.exclude" /></td>
+										</tr>
+										<tr>
+											<td class="excludeBranch">✔</td>
+											<td class="usageText"><f:translate key="module.usage.excludeBranch" /></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</f:section>

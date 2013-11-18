@@ -6,6 +6,16 @@
 	</meta>
 	<data type='array'>
 		<languageKey index='default' type='array'>
+			<label index='mlang_labels_tabdescr'>Overview of pages excluded from the cleaning process.</label>
+			<label index='mlang_tabs_tab'>Table Cleaner</label>
+			<label index='module.description'>Overview of pages excluded from the cleaning process. Here you will find a tree including all the pages that have 'exclude from cleaning' or 'exclude branch' from cleaning set in their page properties. Clicking on a 'page title' will bring up the page properties for that page.</label>
+			<label index='module.startingPoint'>Showing excluded page from starting point '%s' (uid: %s)</label>
+			<label index='module.subTitle'>Overview of excluded pages</label>
+			<label index='module.title'>Table Cleaner</label>
+			<label index='module.usage'>Usage</label>
+			<label index='module.usage.description'>Select a page in the page tree as starting point.</label>
+			<label index='module.usage.exclude'>Page is excluded from cleaning</label>
+			<label index='module.usage.excludeBranch'>Page and all child pages are excluded from cleaning</label>
 			<label index='tasks.deleted.title'>Table Cleaner: remove deleted entries</label>
 			<label index='tasks.deleted.description'>Removes deleted entries older than N days from tables.</label>
 			<label index='tasks.deleted.dayLimit'>Remove deleted entries older than given number of days</label>
@@ -27,6 +37,16 @@
 			<label index='tasks.hidden.additionalInformation'>Remove hidden entries older than %s days from tables: %s</label>
 		</languageKey>
 		<languageKey index='nl' type='array'>
+			<label index='mlang_labels_tabdescr'>Overzicht van pagina's die uitgesloten zijn van opschoning.</label>
+			<label index='mlang_tabs_tab'>Tabel Opschoner</label>
+			<label index='module.description'>Overzicht van pagina's die uitgesloten zijn van opschoning. Hier vind je een overzicht van de pagina's en pagina takken die zijn uitgesloten van opschoning. Door te klikken op de pagina titel kun je de pagina eigenschappen van die pagina bewerken.</label>
+			<label index='module.startingPoint'>Pagina's vanaf startpunt '%s' (uid: %s)</label>
+			<label index='module.subTitle'>Overzicht van uitgesloten pagina's</label>
+			<label index='module.title'>Table Opschoner</label>
+			<label index='module.usage'>Gebruik</label>
+			<label index='module.usage.description'>Kies een pagina uit de paginaboom als startpunt.</label>
+			<label index='module.usage.exclude'>Pagina is uitgesloten van opschoning</label>
+			<label index='module.usage.excludeBranch'>Pagina inclusief alle onderliggende pagina's uitgesloten van opschoning</label>
 			<label index='tasks.deleted.title'>Tabel Opschonen: verwijderde rijen</label>
 			<label index='tasks.deleted.description'>Verwijdert verwijderde rijen ouder dan N dagen van tabellen.</label>
 			<label index='tasks.deleted.dayLimit'>Verwijder 'verwijderde' rijen ouder dan het opgegeven aantal dagen</label>

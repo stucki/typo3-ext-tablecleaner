@@ -1,0 +1,73 @@
+table.typo3-TCEforms .typo3-dyntabmenu-divs .wrapperTable,
+table.typo3-TCEforms .typo3-dyntabmenu-divs .wrapperTable1,
+table.typo3-TCEforms .typo3-dyntabmenu-divs .wrapperTable2,
+table.typo3-TCEforms .typo3-dyntabmenu-divs .wrapperTable3,
+table.typo3-TCEforms .typo3-dyntabmenu-divs .wrapperTable4,
+table.typo3-TCEforms .typo3-dyntabmenu-divs .wrapperTable5 {
+	width: auto;
+	padding-right: 20px;
+}
+
+table.typo3-TCEforms .class-main2 td.exclude,
+table.typo3-TCEforms .class-main2 td.excludeBranch,
+table.typo3-TCEforms .class-main2 td.usageText {
+	padding: 0;
+	line-height: 16px !important;
+}
+
+table.typo3-TCEforms .class-main2 td.exclude,
+table.typo3-TCEforms .class-main2 td.excludeBranch {
+	width: 16px !important;
+}
+
+table.typo3-TCEforms .class-main2 td.usageText {
+	padding-left: 6px;
+}
+
+table#typo3-tree {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+table#typo3-tree tr td.treeIcons {
+	white-space: nowrap;
+	padding-right: 6px;
+}
+
+table#typo3-tree tr td.treeIcons a.linkToPage {
+	display: inline-block;
+	width: 100%;
+}
+
+#typo3-inner-docbody p {
+	padding: 6px 0;
+}
+
+td.exclude,
+td.excludeBranch {
+	color: #333;
+	display: block;
+	font-size: smaller;
+	min-width: 16px !important;
+	text-align: center;
+	vertical-align: middle;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	-moz-box-shadow: inset 1px 1px 2px rgba(100, 100, 100, 0.8);
+	-webkit-box-shadow: inset 1px 1px 2px rgba(100, 100, 100, 0.8);
+	box-shadow: inset 1px 1px 2px rgba(100, 100, 100, 0.8);
+}
+
+td.exclude {
+	color: #333;
+	background-color: #b8dbbe;
+}
+
+td.excludeBranch {
+	background-color: #dbbeb8;
+}
+
+table.typo3-TCEforms {
+	width: auto;
+}
