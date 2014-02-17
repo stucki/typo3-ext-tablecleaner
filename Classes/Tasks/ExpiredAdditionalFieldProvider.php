@@ -171,7 +171,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
 		if (is_resource($resource)) {
-			while ($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource)) {
+			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};
 		}
@@ -184,7 +184,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 	 *
 	 * @param   array $submittedData : reference to the array containing the
 	 *    data submitted by the user
-	 * @param \tx_scheduler_Module|\tx_scheduler_module1 $schedulerModule :
+	 * @param \tx_scheduler_Module $schedulerModule :
 	 *    reference to the calling object (BE module of the Scheduler)
 	 *
 	 * @return   boolean      True if validation was ok (or selected class is
@@ -250,9 +250,6 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 if (defined('TYPO3_MODE') &&
 	isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php'])
 ) {
-	require_once(
-	$GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php']
-	);
+	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php']);
 }
-
 ?>

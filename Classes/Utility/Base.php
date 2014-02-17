@@ -53,7 +53,7 @@ class Tx_Tablecleaner_Utility_Base {
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
 		if (is_resource($resource)) {
-			while ($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource)) {
+			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};
 		}
@@ -81,7 +81,7 @@ class Tx_Tablecleaner_Utility_Base {
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
 		if (is_resource($resource)) {
-			while ($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource)) {
+			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};
 		}
@@ -103,7 +103,7 @@ class Tx_Tablecleaner_Utility_Base {
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
 		if (is_resource($resource)) {
-			while ($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource)) {
+			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};
 		}
@@ -114,13 +114,14 @@ class Tx_Tablecleaner_Utility_Base {
 	 * Fetch child pages
 	 *
 	 * @param integer $pageId
+	 *
 	 * @return array $pageIds
 	 */
 	public static function fetchChildPages($pageId) {
 		$res = $GLOBALS['TYPO3_DB']->sql_query('SELECT uid FROM pages WHERE pid = ' . $pageId);
 		$pageIds = array();
 		$pageIds[] = $pageId;
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 			$pageIds[] = $row['uid'];
 			$pageIds = array_merge($pageIds, self::fetchChildPages($row['uid']));
 		}
@@ -138,7 +139,7 @@ class Tx_Tablecleaner_Utility_Base {
 	public static function fetchExcludedPages() {
 		$pageIds = array();
 
-			// First fetch the pages that have 'tx_tablecleaner_exclude' set
+		// First fetch the pages that have 'tx_tablecleaner_exclude' set
 		$res = $GLOBALS['TYPO3_DB']->sql_query('
 			SELECT
 				uid
@@ -147,12 +148,13 @@ class Tx_Tablecleaner_Utility_Base {
 			WHERE
 				tx_tablecleaner_exclude = 1;
 			');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 			$pageIds[] = $row['uid'];
 		}
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
 
-			// Then recursively fetch the pages that have 'tx_tablecleaner_exclude_branch' set
+		// Then recursively fetch the pages that have
+		// 'tx_tablecleaner_exclude_branch' set
 		$res = $GLOBALS['TYPO3_DB']->sql_query('
 			SELECT
 				uid
@@ -161,7 +163,7 @@ class Tx_Tablecleaner_Utility_Base {
 			WHERE
 				tx_tablecleaner_exclude_branch = 1;
 			');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 			$pageIds = array_merge($pageIds, self::fetchChildPages($row['uid']));
 		}
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
@@ -174,8 +176,8 @@ class Tx_Tablecleaner_Utility_Base {
 }
 
 if (defined('TYPO3_MODE')
-	&& isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Utility/Base.php'])) {
+	&& isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Utility/Base.php'])
+) {
 	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Utility/Base.php']);
 }
-
 ?>
