@@ -53,7 +53,7 @@ class tx_tablecleaner_tasks_Expired extends tx_tablecleaner_tasks_Base {
 						' AND NOT pid IN(' . implode(',', $excludePages) . ')';
 				}
 			} else {
-				$where = 'AND tstamp < ' . $timestamp;
+				$where = ' tstamp < ' . $timestamp;
 			}
 			$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $where);
 			$error = $GLOBALS['TYPO3_DB']->sql_error();
