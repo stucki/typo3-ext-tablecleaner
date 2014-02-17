@@ -54,6 +54,10 @@ class tx_tablecleaner_tasks_Expired extends tx_tablecleaner_tasks_Base {
 			}
 			$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $where);
 			$error = $GLOBALS['TYPO3_DB']->sql_error();
+			if (!$error && $this->optimizeOption) {
+				$GLOBALS['TYPO3_DB']->sql_query('OPTIMIZE TABLE ' . $table);
+				$error = $GLOBALS['TYPO3_DB']->sql_error();
+			}
 			if ($error) {
 				$successfullyExecuted = FALSE;
 			}
