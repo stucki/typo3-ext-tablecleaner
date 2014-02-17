@@ -144,7 +144,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 			"SELECT DISTINCT TABLE_NAME
 			FROM INFORMATION_SCHEMA.COLUMNS
 			WHERE (
-				(TABLE_NAME LIKE '%log%' AND NOT TABLE_NAME LIKE '%blog%')
+				(TABLE_NAME LIKE '%log%' AND NOT (TABLE_NAME LIKE '%blog%'))
 				OR TABLE_NAME LIKE '%hist%'
 				OR TABLE_NAME LIKE '%error%'
 			)
