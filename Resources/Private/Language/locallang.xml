@@ -31,6 +31,7 @@
 			<label index='tasks.general.noTables'>Please select one or more tables to clean</label>
 			<label index='tasks.general.invalidTables'>You somehow selected a table that is not available</label>
 			<label index='tasks.general.invalidNumberOfDays'>Please enter a valid number of days</label>
+			<label index='tasks.general.optimizeOption'>Perform 'OPTIMIZE TABLE' after clean up&lt;br/&gt;(WARNING: database may be unavailable shortly!)</label>
 			<label index='tasks.hidden.title'>Table Cleaner: remove hidden entries</label>
 			<label index='tasks.hidden.description'>Removes hidden entries older than N days from tables.</label>
 			<label index='tasks.hidden.dayLimit'>Remove hidden entries older than given number of days</label>
@@ -62,6 +63,7 @@
 			<label index='tasks.general.noTables'>Selecteer een of meer tabellen om op te schonen</label>
 			<label index='tasks.general.invalidTables'>Je hebt niet beschikbare tabellen geselecteerd</label>
 			<label index='tasks.general.invalidNumberOfDays'>Geef een geldig aantal dagen op</label>
+			<label index='tasks.general.optimizeOption'>Voer 'OPTIMIZE TABLE' uit na opschonen&lt;br/&gt;(Waarschuwing: hierdoor is de database mogelijk even onbereikbaar!)</label>
 			<label index='tasks.hidden.title'>Tabel Opschonen: verborgen rijen</label>
 			<label index='tasks.hidden.description'>Verwijdert verborgen rijen ouder dan N dagen van tabellen.</label>
 			<label index='tasks.hidden.dayLimit'>Verwijder verborgen rijen ouder dan het opgegeven aantal dagen</label>

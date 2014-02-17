@@ -50,12 +50,11 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 		$additionalFields = array();
 
 		$tables = $this->getTables();
-
-			// tables
+		// tables
 		if (empty($taskInfo['expiredTables'])) {
 			$taskInfo['expiredTables'] = array();
 			if ($schedulerModule->CMD == 'add') {
-					// In case of new task, set some defaults
+				// In case of new task, set some defaults
 				if (in_array('sys_log', $tables)) {
 					$taskInfo['expiredTables'][] = 'sys_log';
 				}
@@ -63,7 +62,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 					$taskInfo['expiredTables'][] = 'sys_history';
 				}
 			} elseif ($schedulerModule->CMD == 'edit') {
-					// In case of editing the task, set to currently selected value
+				// In case of editing the task, set to currently selected value
 				$taskInfo['expiredTables'] = $task->getTables();
 			}
 		}
@@ -83,7 +82,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 			'cshLabel' => $fieldId,
 		);
 
-			// day limit
+		// day limit
 		if (empty($taskInfo['expiredDayLimit'])) {
 			if ($schedulerModule->CMD == 'add') {
 				$taskInfo['expiredDayLimit'] = '31';
@@ -104,14 +103,32 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 			'cshLabel' => $fieldId,
 		);
 
+		// 'Optimize table' option
+		if ($taskInfo['optimizeOption'] !== 'checked') {
+			$taskInfo['optimizeOption'] = '';
+			if ($schedulerModule->CMD === 'edit' && $task->getOptimizeOption()) {
+				$taskInfo['optimizeOption'] = 'checked';
+			}
+		}
+
+		$fieldId = 'task_optimizeOption';
+		$fieldCode = '<input type="checkbox" name="tx_scheduler[optimizeOption]" id="' .
+			$fieldId . '" value="checked" ' . $taskInfo['optimizeOption'] . '/>';
+		$additionalFields[$fieldId] = array(
+			'code' => $fieldCode,
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.optimizeOption',
+			'cshKey' => 'tablecleaner',
+			'cshLabel' => $fieldId,
+		);
+
 		return $additionalFields;
 	}
 
 	/**
 	 * Build select options of available tables and set currently selected tables
 	 *
-	 * @param  array $tables  all tables
-	 * @param  array $selectedTables  Selected tables
+	 * @param  array $tables all tables
+	 * @param  array $selectedTables Selected tables
 	 *
 	 * @return string HTML of selectbox options
 	 */
@@ -222,7 +239,8 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 	 */
 	public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
 		/** @var $task tx_tablecleaner_tasks_Expired */
-		$task->setDayLimit(intval($submittedData['expiredDayLimit']));
+		$task->setDayLimit((int)$submittedData['expiredDayLimit']);
+		$task->setOptimizeOption($submittedData['optimizeOption'] == 'checked');
 		$task->setTables($submittedData['expiredTables']);
 	}
 }
@@ -231,7 +249,7 @@ if (defined('TYPO3_MODE') &&
 	isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php'])
 ) {
 	require_once(
-		$GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php']
+	$GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/ExpiredAdditionalFieldProvider.php']
 	);
 }
 

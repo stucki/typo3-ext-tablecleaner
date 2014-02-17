@@ -2,7 +2,7 @@
 /*****************************************************************************
  *  Copyright notice
  *
- *  ⓒ 2013 Michiel Roos <michiel@maxserv.nl>
+ *  ⓒ 2014 Michiel Roos <michiel@maxserv.nl>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is free
@@ -52,11 +52,11 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 		tx_scheduler_Module $schedulerModule) {
 		$additionalFields = array();
 
-			// tables
+		// tables
 		if (empty($taskInfo['deletedTables'])) {
 			$taskInfo['deletedTables'] = array();
-			if ($schedulerModule->CMD == 'add') {
-					// In case of new task, set some defaults
+			if ($schedulerModule->CMD === 'add') {
+				// In case of new task, set some defaults
 				$tablesWithDeleted = Tx_Tablecleaner_Utility_Base::getTablesWithDeletedAndTstamp();
 				if (in_array('sys_log', $tablesWithDeleted)) {
 					$taskInfo['deletedTables'][] = 'sys_log';
@@ -65,7 +65,7 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 					$taskInfo['deletedTables'][] = 'sys_history';
 				}
 			} elseif ($schedulerModule->CMD == 'edit') {
-					// In case of editing the task, set to currently selected value
+				// In case of editing the task, set to currently selected value
 				$taskInfo['deletedTables'] = $task->getTables();
 			}
 		}
@@ -85,7 +85,7 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 			'cshLabel' => $fieldId,
 		);
 
-			// daylimit
+		// daylimit
 		if (empty($taskInfo['deletedDayLimit'])) {
 			if ($schedulerModule->CMD == 'add') {
 				$taskInfo['deletedDayLimit'] = '31';
@@ -100,6 +100,24 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 		$additionalFields[$fieldId] = array(
 			'code' => $fieldCode,
 			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.deleted.dayLimit',
+			'cshKey' => 'tablecleaner',
+			'cshLabel' => $fieldId,
+		);
+
+		// 'Optimize table' option
+		if ($taskInfo['optimizeOption'] !== 'checked') {
+			$taskInfo['optimizeOption'] = '';
+			if ($schedulerModule->CMD === 'edit' && $task->getOptimizeOption()) {
+				$taskInfo['optimizeOption'] = 'checked';
+			}
+		}
+
+		$fieldId = 'task_optimizeOption';
+		$fieldCode = '<input type="checkbox" name="tx_scheduler[optimizeOption]" id="' .
+			$fieldId . '" value="checked" ' . $taskInfo['optimizeOption'] . '/>';
+		$additionalFields[$fieldId] = array(
+			'code' => $fieldCode,
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.optimizeOption',
 			'cshKey' => 'tablecleaner',
 			'cshLabel' => $fieldId,
 		);
@@ -196,6 +214,7 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 	public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
 		/** @var $task tx_tablecleaner_tasks_Base */
 		$task->setDayLimit(intval($submittedData['deletedDayLimit']));
+		$task->setOptimizeOption($submittedData['optimizeOption'] === 'checked');
 		$task->setTables($submittedData['deletedTables']);
 	}
 }
@@ -204,7 +223,7 @@ if (defined('TYPO3_MODE') &&
 	isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/DeletedAdditionalFieldProvider.php'])
 ) {
 	require_once(
-		$GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/DeletedAdditionalFieldProvider.php']
+	$GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/DeletedAdditionalFieldProvider.php']
 	);
 }
 

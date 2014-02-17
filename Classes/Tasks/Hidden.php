@@ -39,52 +39,37 @@ class tx_tablecleaner_tasks_Hidden extends tx_tablecleaner_tasks_Base {
 	 */
 	public function execute() {
 		$successfullyExecuted = TRUE;
-		$timestamp = strtotime('-' . intval($this->dayLimit) . 'days');
+		$timestamp = strtotime('-' . (int)$this->dayLimit . 'days');
 		$markAsDeleted = $this->markAsDeleted;
 		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
 		$tablesWithPid = Tx_Tablecleaner_Utility_Base::getTablesWithPid();
 		$tablesWithDeleted = Tx_Tablecleaner_Utility_Base::getTablesWithDeletedAndTstamp();
 
-		$now = time();
 		foreach ($this->tables as $table) {
-			if ($markAsDeleted && in_array($table, $tablesWithDeleted)) {
-				if (in_array($table, $tablesWithPid) AND count($excludePages)) {
-					if ($table == 'pages') {
-						$where = 'hidden = 1 AND tstamp < ' . $timestamp .
-							' AND NOT uid IN(' . implode(',', $excludePages) . ')';
-					} else {
-						$where = 'hidden = 1 AND tstamp < ' . $timestamp .
-							' AND NOT pid IN(' . implode(',', $excludePages) . ')';
-					}
+			$where = 'hidden = 1 AND tstamp < ' . $timestamp;
+			if (!empty($excludePages) && in_array($table, $tablesWithPid)) {
+				if ($table === 'pages') {
+					$where .= ' AND NOT uid IN(' . implode(',', $excludePages) . ')';
 				} else {
-					$where = 'hidden = 1 AND tstamp < ' . $timestamp;
+					$where .= ' AND NOT pid IN(' . implode(',', $excludePages) . ')';
 				}
+			}
+			if ($markAsDeleted && in_array($table, $tablesWithDeleted)) {
 				$fieldValues = array (
-					'tstamp' => $now,
+					'tstamp' => $_SERVER['REQUEST_TIME'],
 					'deleted' => 1
 				);
 				$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, $where, $fieldValues);
-				$error = $GLOBALS['TYPO3_DB']->sql_error();
-				if ($error) {
-					$successfullyExecuted = FALSE;
-				}
 			} else {
-				if (in_array($table, $tablesWithPid) AND count($excludePages)) {
-					if ($table == 'pages') {
-						$where = 'hidden = 1 AND tstamp < ' . $timestamp .
-							' AND NOT uid IN(' . implode(',', $excludePages) . ')';
-					} else {
-						$where = 'hidden = 1 AND tstamp < ' . $timestamp .
-							' AND NOT pid IN(' . implode(',', $excludePages) . ')';
-					}
-				} else {
-					$where = 'hidden = 1 AND tstamp < ' . $timestamp;
-				}
 				$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $where);
 				$error = $GLOBALS['TYPO3_DB']->sql_error();
-				if ($error) {
-					$successfullyExecuted = FALSE;
+				if (!$error && $this->optimizeOption) {
+					$GLOBALS['TYPO3_DB']->sql_query('OPTIMIZE TABLE ' . $table);
 				}
+			}
+			$error = $GLOBALS['TYPO3_DB']->sql_error();
+			if ($error) {
+				$successfullyExecuted = FALSE;
 			}
 		}
 		return $successfullyExecuted;
@@ -100,7 +85,7 @@ class tx_tablecleaner_tasks_Hidden extends tx_tablecleaner_tasks_Base {
 		$string = $GLOBALS['LANG']->sL(
 			'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.hidden.additionalInformation'
 		);
-		$message = sprintf($string, intval($this->dayLimit), implode(', ', $this->tables));
+		$message = sprintf($string, (int)$this->dayLimit, implode(', ', $this->tables));
 		return $message;
 	}
 }

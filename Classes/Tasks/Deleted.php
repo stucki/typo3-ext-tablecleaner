@@ -39,24 +39,25 @@ class tx_tablecleaner_tasks_Deleted extends tx_tablecleaner_tasks_Base {
 	 */
 	public function execute() {
 		$successfullyExecuted = TRUE;
-		$timestamp = strtotime('-' . intval($this->dayLimit) . 'days');
+		$timestamp = strtotime('-' . (int)$this->dayLimit . 'days');
 		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
 		$tablesWithPid = Tx_Tablecleaner_Utility_Base::getTablesWithPid();
 
 		foreach ($this->tables as $table) {
-			if (in_array($table, $tablesWithPid) AND count($excludePages)) {
-				if ($table == 'pages') {
-					$where = 'deleted = 1 AND tstamp < ' . $timestamp .
-						' AND NOT uid IN(' . implode(',', $excludePages) . ')';
+			$where = 'deleted = 1 AND tstamp < ' . $timestamp;
+			if (!empty($excludePages) && in_array($table, $tablesWithPid)) {
+				if ($table === 'pages') {
+					$where .= ' AND NOT uid IN(' . implode(',', $excludePages) . ')';
 				} else {
-					$where = 'deleted = 1 AND tstamp < ' . $timestamp .
-						' AND NOT pid IN(' . implode(',', $excludePages) . ')';
+					$where .= ' AND NOT pid IN(' . implode(',', $excludePages) . ')';
 				}
-			} else {
-				$where = 'deleted = 1 AND tstamp < ' . $timestamp;
 			}
 			$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $where);
 			$error = $GLOBALS['TYPO3_DB']->sql_error();
+			if (!$error && $this->optimizeOption) {
+				$GLOBALS['TYPO3_DB']->sql_query('OPTIMIZE TABLE ' . $table);
+				$error = $GLOBALS['TYPO3_DB']->sql_error();
+			}
 			if ($error) {
 				$successfullyExecuted = FALSE;
 			}
@@ -74,13 +75,14 @@ class tx_tablecleaner_tasks_Deleted extends tx_tablecleaner_tasks_Base {
 		$string = $GLOBALS['LANG']->sL(
 			'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.deleted.additionalInformation'
 		);
-		$message = sprintf($string, intval($this->dayLimit), implode(', ', $this->tables));
+		$message = sprintf($string, (int)$this->dayLimit, implode(', ', $this->tables));
 		return $message;
 	}
 }
 
 if (defined('TYPO3_MODE')
-	&& isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/Deleted.php'])) {
+	&& isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/Deleted.php'])
+) {
 	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/Deleted.php']);
 }
 

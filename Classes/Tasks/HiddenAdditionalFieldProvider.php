@@ -51,11 +51,11 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 
 		$tables = Tx_Tablecleaner_Utility_Base::getTablesWithHiddenAndTstamp();
 
-			// tables
+		// tables
 		if (empty($taskInfo['hiddenTables'])) {
 			$taskInfo['hiddenTables'] = array();
-			if ($schedulerModule->CMD == 'add') {
-					// In case of new task, set some defaults
+			if ($schedulerModule->CMD === 'add') {
+				// In case of new task, set some defaults
 				if (in_array('sys_log', $tables)) {
 					$taskInfo['hiddenTables'][] = 'sys_log';
 				}
@@ -63,8 +63,8 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 					$taskInfo['hiddenTables'][] = 'sys_history';
 				}
 				$taskInfo['markAsDeleted'] = 1;
-			} elseif ($schedulerModule->CMD == 'edit') {
-					// In case of editing the task, set to currently selected value
+			} elseif ($schedulerModule->CMD === 'edit') {
+				// In case of editing the task, set to currently selected value
 				$taskInfo['hiddenTables'] = $task->getTables();
 			}
 		}
@@ -84,9 +84,9 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 			'cshLabel' => $fieldId,
 		);
 
-			// day limit
+		// day limit
 		if (empty($taskInfo['dayLimit'])) {
-			if ($schedulerModule->CMD == 'add') {
+			if ($schedulerModule->CMD === 'add') {
 				$taskInfo['dayLimit'] = '31';
 			} else {
 				$taskInfo['dayLimit'] = $task->getDayLimit();
@@ -103,9 +103,9 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 			'cshLabel' => $fieldId,
 		);
 
-			// Don't delete, but mark as deleted
+		// Don't delete, but mark as deleted
 		if (empty($taskInfo['markAsDeleted'])) {
-			if ($schedulerModule->CMD == 'add') {
+			if ($schedulerModule->CMD === 'add') {
 				$taskInfo['markAsDeleted'] = '';
 			} else {
 				$taskInfo['markAsDeleted'] = $task->getMarkAsDeleted();
@@ -122,13 +122,31 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 			'cshLabel' => 'task_markAsDeleted',
 		);
 
+		// 'Optimize table' option
+		if ($taskInfo['optimizeOption'] !== 'checked') {
+			$taskInfo['optimizeOption'] = '';
+			if ($schedulerModule->CMD === 'edit' && $task->getOptimizeOption()) {
+				$taskInfo['optimizeOption'] = 'checked';
+			}
+		}
+
+		$fieldId = 'task_optimizeOption';
+		$fieldCode = '<input type="checkbox" name="tx_scheduler[optimizeOption]" id="' .
+			$fieldId . '" value="checked" ' . $taskInfo['optimizeOption'] . '/>';
+		$additionalFields[$fieldId] = array(
+			'code' => $fieldCode,
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.optimizeOption',
+			'cshKey' => 'tablecleaner',
+			'cshLabel' => $fieldId,
+		);
+
 		return $additionalFields;
 	}
 
 	/**
 	 * Build select options of available tables and set currently selected tables
 	 *
-	 * @param array $tables  Available tables
+	 * @param array $tables Available tables
 	 * @param array $selectedTables Selected tables
 	 *
 	 * @return string HTML of selectbox options
@@ -216,6 +234,7 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 		/** @var $task tx_tablecleaner_tasks_Base */
 		$task->setDayLimit(intval($submittedData['dayLimit']));
 		$task->setMarkAsDeleted($submittedData['markAsDeleted']);
+		$task->setOptimizeOption($submittedData['optimizeOption'] === 'checked');
 		$task->setTables($submittedData['hiddenTables']);
 	}
 }
@@ -224,7 +243,7 @@ if (defined('TYPO3_MODE') &&
 	isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/HiddenAdditionalFieldProvider.php'])
 ) {
 	require_once(
-		$GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/HiddenAdditionalFieldProvider.php']
+	$GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/HiddenAdditionalFieldProvider.php']
 	);
 }
 

@@ -47,6 +47,13 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	protected $dayLimit;
 
 	/**
+	 * Optimize table option
+	 *
+	 * @var boolean
+	 */
+	protected $optimizeOption;
+
+	/**
 	 * Mark as deleted
 	 *
 	 * @var boolean
@@ -66,6 +73,7 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	 * Set the value of the private property tables.
 	 *
 	 * @param array $tables
+	 *
 	 * @return void
 	 */
 	public function setTables($tables) {
@@ -85,10 +93,31 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	 * Set the value of the private property dayLimit.
 	 *
 	 * @param integer $dayLimit Number of days after which to remove the records
+	 *
 	 * @return void
 	 */
 	public function setDayLimit($dayLimit) {
 		$this->dayLimit = $dayLimit;
+	}
+
+	/**
+	 * Get the value of the protected property optimizeOption.
+	 *
+	 * @return integer optimizeOption
+	 */
+	public function getOptimizeOption() {
+		return $this->optimizeOption;
+	}
+
+	/**
+	 * Set the value of the private property optimizeOption.
+	 *
+	 * @param integer $optimizeOption Number of days after which to remove the records
+	 *
+	 * @return void
+	 */
+	public function setOptimizeOption($optimizeOption) {
+		$this->optimizeOption = $optimizeOption;
 	}
 
 	/**
@@ -123,7 +152,8 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 }
 
 if (defined('TYPO3_MODE')
-	&& isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/Base.php'])) {
+	&& isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/Base.php'])
+) {
 	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/Base.php']);
 }
 

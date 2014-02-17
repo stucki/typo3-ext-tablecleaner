@@ -39,21 +39,18 @@ class tx_tablecleaner_tasks_Expired extends tx_tablecleaner_tasks_Base {
 	 */
 	public function execute() {
 		$successfullyExecuted = TRUE;
-		$timestamp = strtotime('-' . intval($this->dayLimit) . 'days');
+		$timestamp = strtotime('-' . (int)$this->dayLimit . 'days');
 		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
 		$tablesWithPid = Tx_Tablecleaner_Utility_Base::getTablesWithPid();
 
 		foreach ($this->tables as $table) {
-			if (in_array($table, $tablesWithPid) AND count($excludePages)) {
-				if ($table == 'pages') {
-					$where = 'tstamp < ' . $timestamp .
-						' AND NOT uid IN(' . implode(',', $excludePages) . ')';
+			$where = ' tstamp < ' . $timestamp;
+			if (!empty($excludePages) && in_array($table, $tablesWithPid)) {
+				if ($table === 'pages') {
+					$where .= ' AND NOT uid IN(' . implode(',', $excludePages) . ')';
 				} else {
-					$where = 'tstamp < ' . $timestamp .
-						' AND NOT pid IN(' . implode(',', $excludePages) . ')';
+					$where .= ' AND NOT pid IN(' . implode(',', $excludePages) . ')';
 				}
-			} else {
-				$where = ' tstamp < ' . $timestamp;
 			}
 			$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $where);
 			$error = $GLOBALS['TYPO3_DB']->sql_error();
@@ -74,7 +71,7 @@ class tx_tablecleaner_tasks_Expired extends tx_tablecleaner_tasks_Base {
 		$string = $GLOBALS['LANG']->sL(
 			'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.expired.additionalInformation'
 		);
-		$message = sprintf($string, intval($this->dayLimit), implode(', ', $this->tables));
+		$message = sprintf($string, (int)$this->dayLimit, implode(', ', $this->tables));
 		return $message;
 	}
 }
