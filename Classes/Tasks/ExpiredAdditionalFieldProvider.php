@@ -165,7 +165,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 				OR TABLE_NAME LIKE '%hist%'
 				OR TABLE_NAME LIKE '%error%'
 				OR TABLE_NAME LIKE '%cache%'
-				OR TABLE_NAME LIKE '%stats%'
+				OR TABLE_NAME LIKE '%stat%'
 			)
 			AND COLUMN_NAME = 'tstamp'
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
