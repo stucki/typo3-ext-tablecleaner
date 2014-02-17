@@ -1,3 +1,11 @@
+2014-02-17  Michiel Roos <michiel@maxserv.nl>
+	* [BUGFIX] Task remove expired entries fails to execute. Thanks to Andreas Beyl
+	* [BUGFIX] Missing tables in task remove expired entries. Thanks to Andreas Beyl
+	* [BUGFIX] Expired task does not preserve selected tables on edit. Thanks to Loek Hilgersom
+	* [TASK] Add OPTIMIZE TABLE option. Thanks to Loek Hilgersom
+	* [TASK] Add some more tables to the list in Expired Task. Thanks to Loek Hilgersom
+	* [TASK] Refactoring and code cleanup
+
 2013-11-18  Michiel Roos <michiel@maxserv.nl>
 	* Add backend module for excluded page inspection
 
