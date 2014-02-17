@@ -64,7 +64,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 				}
 			} elseif ($schedulerModule->CMD == 'edit') {
 					// In case of editing the task, set to currently selected value
-				$taskInfo['expiredTables'] = $tables;
+				$taskInfo['expiredTables'] = $task->getTables();
 			}
 		}
 
