@@ -138,6 +138,26 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	}
 
 	/**
+	 * Get the where clause
+	 *
+	 * @param $table
+	 *
+	 * @return string
+	 */
+	public function getWhereClause($table) {
+		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
+		$tablesWithPid = Tx_Tablecleaner_Utility_Base::getTablesWithPid();
+		$where = ' tstamp < ' . strtotime('-' . (int)$this->dayLimit . 'days');
+		if (!empty($excludePages) && in_array($table, $tablesWithPid)) {
+			if ($table === 'pages') {
+				$where .= ' AND NOT uid IN(' . implode(',', $excludePages) . ')';
+			} else {
+				$where .= ' AND NOT pid IN(' . implode(',', $excludePages) . ')';
+			}
+		}
+		return $where;
+	}
+	/**
 	 * This is the main method that is called when a task is executed
 	 * It MUST be implemented by all classes inheriting from this one
 	 * Note that there is no error handling, errors and failures are expected

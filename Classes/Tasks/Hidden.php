@@ -35,26 +35,14 @@ class tx_tablecleaner_tasks_Hidden extends tx_tablecleaner_tasks_Base {
 	/**
 	 * Function executed from the Scheduler.
 	 *
-	 * @return   boolean
+	 * @return boolean
 	 */
 	public function execute() {
 		$successfullyExecuted = TRUE;
-		$timestamp = strtotime('-' . (int)$this->dayLimit . 'days');
-		$markAsDeleted = $this->markAsDeleted;
-		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
-		$tablesWithPid = Tx_Tablecleaner_Utility_Base::getTablesWithPid();
-		$tablesWithDeleted = Tx_Tablecleaner_Utility_Base::getTablesWithDeletedAndTstamp();
 
 		foreach ($this->tables as $table) {
-			$where = 'hidden = 1 AND tstamp < ' . $timestamp;
-			if (!empty($excludePages) && in_array($table, $tablesWithPid)) {
-				if ($table === 'pages') {
-					$where .= ' AND NOT uid IN(' . implode(',', $excludePages) . ')';
-				} else {
-					$where .= ' AND NOT pid IN(' . implode(',', $excludePages) . ')';
-				}
-			}
-			if ($markAsDeleted && in_array($table, $tablesWithDeleted)) {
+			$where = 'hidden = 1 AND ' . $this->getWhereClause($table);
+			if ($this->markAsDeleted && in_array($table, Tx_Tablecleaner_Utility_Base::getTablesWithDeletedAndTstamp())) {
 				$fieldValues = array (
 					'tstamp' => $_SERVER['REQUEST_TIME'],
 					'deleted' => 1
@@ -67,8 +55,7 @@ class tx_tablecleaner_tasks_Hidden extends tx_tablecleaner_tasks_Base {
 					$GLOBALS['TYPO3_DB']->sql_query('OPTIMIZE TABLE ' . $table);
 				}
 			}
-			$error = $GLOBALS['TYPO3_DB']->sql_error();
-			if ($error) {
+			if ($GLOBALS['TYPO3_DB']->sql_error()) {
 				$successfullyExecuted = FALSE;
 			}
 		}
@@ -79,14 +66,13 @@ class tx_tablecleaner_tasks_Hidden extends tx_tablecleaner_tasks_Base {
 	 * Returns some additional information about indexing progress, shown in
 	 * the scheduler's task overview list.
 	 *
-	 * @return   string   Information to display
+	 * @return string Information to display
 	 */
 	public function getAdditionalInformation() {
 		$string = $GLOBALS['LANG']->sL(
 			'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.hidden.additionalInformation'
 		);
-		$message = sprintf($string, (int)$this->dayLimit, implode(', ', $this->tables));
-		return $message;
+		return sprintf($string, (int)$this->dayLimit, implode(', ', $this->tables));
 	}
 }
 

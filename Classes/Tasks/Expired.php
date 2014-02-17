@@ -35,24 +35,13 @@ class tx_tablecleaner_tasks_Expired extends tx_tablecleaner_tasks_Base {
 	/**
 	 * Function executed from the Scheduler.
 	 *
-	 * @return   boolean
+	 * @return boolean
 	 */
 	public function execute() {
 		$successfullyExecuted = TRUE;
-		$timestamp = strtotime('-' . (int)$this->dayLimit . 'days');
-		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
-		$tablesWithPid = Tx_Tablecleaner_Utility_Base::getTablesWithPid();
 
 		foreach ($this->tables as $table) {
-			$where = ' tstamp < ' . $timestamp;
-			if (!empty($excludePages) && in_array($table, $tablesWithPid)) {
-				if ($table === 'pages') {
-					$where .= ' AND NOT uid IN(' . implode(',', $excludePages) . ')';
-				} else {
-					$where .= ' AND NOT pid IN(' . implode(',', $excludePages) . ')';
-				}
-			}
-			$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $where);
+			$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $this->getWhereClause($table));
 			$error = $GLOBALS['TYPO3_DB']->sql_error();
 			if (!$error && $this->optimizeOption) {
 				$GLOBALS['TYPO3_DB']->sql_query('OPTIMIZE TABLE ' . $table);
@@ -69,14 +58,13 @@ class tx_tablecleaner_tasks_Expired extends tx_tablecleaner_tasks_Base {
 	 * Returns some additional information about indexing progress, shown in
 	 * the scheduler's task overview list.
 	 *
-	 * @return   string   Information to display
+	 * @return string Information to display
 	 */
 	public function getAdditionalInformation() {
 		$string = $GLOBALS['LANG']->sL(
 			'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.expired.additionalInformation'
 		);
-		$message = sprintf($string, (int)$this->dayLimit, implode(', ', $this->tables));
-		return $message;
+		return sprintf($string, (int)$this->dayLimit, implode(', ', $this->tables));
 	}
 }
 
