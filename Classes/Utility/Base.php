@@ -61,6 +61,34 @@ class Tx_Tablecleaner_Utility_Base {
 	}
 
 	/**
+	 * Get all tables with hidden and endtime fields
+	 *
+	 * @return array $tables  The tables
+	 */
+	public static function getTablesWithHiddenAndEndtime() {
+		$tables = array();
+		$resource = $GLOBALS['TYPO3_DB']->sql_query(
+			"SELECT TABLE_NAME
+			FROM INFORMATION_SCHEMA.COLUMNS
+			WHERE TABLE_NAME
+			IN (
+				SELECT TABLE_NAME
+				FROM INFORMATION_SCHEMA.COLUMNS
+				WHERE COLUMN_NAME = 'hidden'
+				AND TABLE_SCHEMA =  '" . TYPO3_db . "'
+			)
+			AND COLUMN_NAME = 'endtime'
+			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
+		);
+		if (is_resource($resource)) {
+			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
+				$tables[] = $result['TABLE_NAME'];
+			};
+		}
+		return $tables;
+	}
+
+	/**
 	 * Get all tables with hidden and tstamp fields
 	 *
 	 * @return array $tables  The tables

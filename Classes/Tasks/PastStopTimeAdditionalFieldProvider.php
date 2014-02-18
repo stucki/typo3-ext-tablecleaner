@@ -22,7 +22,7 @@
  ****************************************************************************/
 
 /**
- * Additional field provider for the Hidden scheduler task
+ * Additional field provider for the PastStopTime scheduler task
  *
  * @package TYPO3
  * @subpackage tablecleaner
@@ -30,13 +30,13 @@
  * @license http://opensource.org/licenses/gpl-license.php
  *    GNU Public License, version 2
  */
-class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider {
+class tx_tablecleaner_tasks_PastStopTimeAdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider {
 
 	/**
 	 * Render additional information fields within the scheduler backend.
 	 *
 	 * @param  array $taskInfo
-	 * @param  tx_tablecleaner_tasks_Hidden $task : task object
+	 * @param  tx_tablecleaner_tasks_PastStopTime $task : task object
 	 * @param  tx_scheduler_Module $schedulerModule : reference to the calling
 	 *    object (BE module of the Scheduler)
 	 *
@@ -49,29 +49,19 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 	public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $schedulerModule) {
 		$additionalFields = array();
 
-		$tables = Tx_Tablecleaner_Utility_Base::getTablesWithHiddenAndTstamp();
-
+		$tables = Tx_Tablecleaner_Utility_Base::getTablesWithHiddenAndEndtime();
 		// tables
-		if (empty($taskInfo['hiddenTables'])) {
-			$taskInfo['hiddenTables'] = array();
-			if ($schedulerModule->CMD === 'add') {
-				// In case of new task, set some defaults
-				if (in_array('sys_log', $tables)) {
-					$taskInfo['hiddenTables'][] = 'sys_log';
-				}
-				if (in_array('sys_history', $tables)) {
-					$taskInfo['hiddenTables'][] = 'sys_history';
-				}
-				$taskInfo['markAsDeleted'] = 1;
-			} elseif ($schedulerModule->CMD === 'edit') {
-				// In case of editing the task, set to currently selected value
-				$taskInfo['hiddenTables'] = $task->getTables();
+		if (empty($taskInfo['pastStopTimeTables'])) {
+			$taskInfo['pastStopTimeTables'] = array();
+			// In case of editing the task, set to currently selected value
+			if ($schedulerModule->CMD === 'edit') {
+				$taskInfo['pastStopTimeTables'] = $task->getTables();
 			}
 		}
 
-		$fieldName = 'tx_scheduler[hiddenTables][]';
-		$fieldId = 'task_hiddenTables';
-		$fieldOptions = $this->getTableOptions($tables, $taskInfo['hiddenTables']);
+		$fieldName = 'tx_scheduler[pastStopTimeTables][]';
+		$fieldId = 'task_pastStopTimeTables';
+		$fieldOptions = $this->getTableOptions($tables, $taskInfo['pastStopTimeTables']);
 		$fieldHtml =
 			'<select name="' . $fieldName . '" id="' . $fieldId . '" class="wide" size="10" multiple="multiple">' .
 			$fieldOptions .
@@ -85,57 +75,22 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 		);
 
 		// day limit
-		if (empty($taskInfo['dayLimit'])) {
+		if (empty($taskInfo['pastStopTimeDayLimit'])) {
 			if ($schedulerModule->CMD === 'add') {
-				$taskInfo['dayLimit'] = '31';
+				$taskInfo['pastStopTimeDayLimit'] = '31';
+			} elseif ($schedulerModule->CMD == 'edit') {
+				$taskInfo['pastStopTimeDayLimit'] = $task->getDayLimit();
 			} else {
-				$taskInfo['dayLimit'] = $task->getDayLimit();
+				$taskInfo['pastStopTimeDayLimit'] = $task->getDayLimit();
 			}
 		}
 
 		$fieldId = 'task_dayLimit';
-		$fieldCode = '<input type="text" name="tx_scheduler[dayLimit]" id="' .
-			$fieldId . '" value="' . htmlspecialchars($taskInfo['dayLimit']) . '" size="4"/>';
+		$fieldCode = '<input type="text" name="tx_scheduler[pastStopTimeDayLimit]" id="' .
+			$fieldId . '" value="' . htmlspecialchars($taskInfo['pastStopTimeDayLimit']) . '" size="4"/>';
 		$additionalFields[$fieldId] = array(
 			'code' => $fieldCode,
-			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.hidden.dayLimit',
-			'cshKey' => 'tablecleaner',
-			'cshLabel' => $fieldId,
-		);
-
-		// Don't delete, but mark as deleted
-		if (empty($taskInfo['markAsDeleted'])) {
-			if ($schedulerModule->CMD === 'add') {
-				$taskInfo['markAsDeleted'] = '';
-			} else {
-				$taskInfo['markAsDeleted'] = $task->getMarkAsDeleted();
-			}
-		}
-
-		$fieldId = 'task_markAsDeleted';
-		$fieldCode = '<input type="checkbox" name="tx_scheduler[markAsDeleted]" id="' .
-			$fieldId . '" value="1" ' . (intval($taskInfo['markAsDeleted']) ? ' checked="checked"' : '') . '/>';
-		$additionalFields[$fieldId] = array(
-			'code' => $fieldCode,
-			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.markAsDeleted',
-			'cshKey' => 'tablecleaner',
-			'cshLabel' => 'task_markAsDeleted',
-		);
-
-		// 'Optimize table' option
-		if ($taskInfo['optimizeOption'] !== 'checked') {
-			$taskInfo['optimizeOption'] = '';
-			if ($schedulerModule->CMD === 'edit' && $task->getOptimizeOption()) {
-				$taskInfo['optimizeOption'] = 'checked';
-			}
-		}
-
-		$fieldId = 'task_optimizeOption';
-		$fieldCode = '<input type="checkbox" name="tx_scheduler[optimizeOption]" id="' .
-			$fieldId . '" value="checked" ' . $taskInfo['optimizeOption'] . '/>';
-		$additionalFields[$fieldId] = array(
-			'code' => $fieldCode,
-			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.optimizeOption',
+			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.pastStopTime.dayLimit',
 			'cshKey' => 'tablecleaner',
 			'cshLabel' => $fieldId,
 		);
@@ -146,8 +101,8 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 	/**
 	 * Build select options of available tables and set currently selected tables
 	 *
-	 * @param array $tables Available tables
-	 * @param array $selectedTables Selected tables
+	 * @param  array $tables all tables
+	 * @param  array $selectedTables Selected tables
 	 *
 	 * @return string HTML of selectbox options
 	 */
@@ -184,9 +139,9 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 	public function validateAdditionalFields(array &$submittedData, tx_scheduler_Module $schedulerModule) {
 		$isValid = TRUE;
 
-		if (is_array($submittedData['hiddenTables'])) {
-			$tables = Tx_Tablecleaner_Utility_Base::getTablesWithHiddenAndTstamp();
-			foreach ($submittedData['hiddenTables'] as $table) {
+		if (is_array($submittedData['pastStopTimeTables'])) {
+			$tables = Tx_Tablecleaner_Utility_Base::getTablesWithHiddenAndEndtime();
+			foreach ($submittedData['pastStopTimeTables'] as $table) {
 				if (!in_array($table, $tables)) {
 					$isValid = FALSE;
 					$schedulerModule->addMessage(
@@ -200,12 +155,14 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 		} else {
 			$isValid = FALSE;
 			$schedulerModule->addMessage(
-				$GLOBALS['LANG']->sL('LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.noTables'),
+				$GLOBALS['LANG']->sL(
+					'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.general.noTables'
+				),
 				t3lib_FlashMessage::ERROR
 			);
 		}
 
-		if ($submittedData['dayLimit'] <= 0) {
+		if ($submittedData['pastStopTimeDayLimit'] <= 0) {
 			$isValid = FALSE;
 			$schedulerModule->addMessage(
 				$GLOBALS['LANG']->sL(
@@ -214,8 +171,6 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 				t3lib_FlashMessage::ERROR
 			);
 		}
-
-		$submittedData['markAsDeleted'] = intval($submittedData['markAsDeleted']);
 
 		return $isValid;
 	}
@@ -231,17 +186,15 @@ class tx_tablecleaner_tasks_HiddenAdditionalFieldProvider implements tx_schedule
 	 * @return   void
 	 */
 	public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
-		/** @var $task tx_tablecleaner_tasks_Base */
-		$task->setDayLimit(intval($submittedData['dayLimit']));
-		$task->setMarkAsDeleted($submittedData['markAsDeleted']);
-		$task->setOptimizeOption($submittedData['optimizeOption'] === 'checked');
-		$task->setTables($submittedData['hiddenTables']);
+		/** @var $task tx_tablecleaner_tasks_PastStopTime */
+		$task->setDayLimit((int)$submittedData['pastStopTimeDayLimit']);
+		$task->setTables($submittedData['pastStopTimeTables']);
 	}
 }
 
 if (defined('TYPO3_MODE') &&
-	isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/HiddenAdditionalFieldProvider.php'])
+	isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/PastStopTimeAdditionalFieldProvider.php'])
 ) {
-	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/HiddenAdditionalFieldProvider.php']);
+	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/PastStopTimeAdditionalFieldProvider.php']);
 }
 ?>

@@ -140,13 +140,14 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	/**
 	 * Get the where clause
 	 *
-	 * @param $table
+	 * @param string $table The table for which to build the where clause.
+	 * @param string $stampField The name of the timesamp field.
 	 *
 	 * @return string
 	 */
-	public function getWhereClause($table) {
+	public function getWhereClause($table, $stampField = 'tstamp') {
 		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
-		$where = ' tstamp < ' . strtotime('-' . (int)$this->dayLimit . 'days');
+		$where = ' ' . $stampField . ' < ' . strtotime('-' . (int)$this->dayLimit . 'days');
 		if (!empty($excludePages) && in_array($table, Tx_Tablecleaner_Utility_Base::getTablesWithPid())) {
 			if ($table === 'pages') {
 				$where .= ' AND NOT uid IN(' . implode(',', $excludePages) . ')';

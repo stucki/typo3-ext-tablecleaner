@@ -95,7 +95,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 
 		$fieldId = 'task_dayLimit';
 		$fieldCode = '<input type="text" name="tx_scheduler[expiredDayLimit]" id="' .
-			$fieldId . '" value="' . htmlspecialchars($taskInfo['expiredDayLimit']) . '"/>';
+			$fieldId . '" value="' . htmlspecialchars($taskInfo['expiredDayLimit']) . '" size="4"/>';
 		$additionalFields[$fieldId] = array(
 			'code' => $fieldCode,
 			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.expired.dayLimit',

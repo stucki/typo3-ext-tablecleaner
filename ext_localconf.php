@@ -24,4 +24,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_tablecleaner
 	'additionalFields' => 'tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider'
 );
 
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_tablecleaner_tasks_PastStopTime'] = array(
+	'extension'        => 'tablecleaner',
+	'title'            => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.pastStopTime.title',
+	'description'      => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.pastStopTime.description',
+	'additionalFields' => 'tx_tablecleaner_tasks_PastStopTimeAdditionalFieldProvider'
+);
+
 ?>

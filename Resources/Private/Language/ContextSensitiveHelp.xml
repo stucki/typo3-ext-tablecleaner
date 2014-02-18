@@ -16,6 +16,8 @@
 			<label index="task_dayLimit.description">Choose the number of days after which the 'hidden' entries should be removed from the chosen tables.</label>
 			<label index="task_expiredTables.alttitle">Tables</label>
 			<label index="task_expiredTables.description">Select the tables from which you want to remove the expired entries.</label>
+			<label index="task_pastStopTimeTables.alttitle">Tables</label>
+			<label index="task_pastStopTimeTables.description">Select the tables from which you want to hide the entries that have passed the stoptime.</label>
 			<label index="task_dayLimit.alttitle">Retention time</label>
 			<label index="task_dayLimit.description">Choose the number of days after which the entries should be removed from the chosen tables.</label>
 			<label index="task_markAsDeleted.alttitle">Mark as deleted</label>
@@ -32,6 +34,8 @@
 			<label index="task_dayLimit.description">Het aantal dagen waarna de verborgen rijen uit de tabel worden verwijderd.</label>
 			<label index="task_expiredTables.alttitle">Tabellen</label>
 			<label index="task_expiredTables.description">Selecteer de tabellen waaruit de rijden moeten worden verwijderd.</label>
+			<label index="task_pastStopTimeTables.alttitle">Tabellen</label>
+			<label index="task_pastStopTimeTables.description">Selecteer de tabellen waarvan de rijden moeten worden verborgen.</label>
 			<label index="task_dayLimit.alttitle">Retentie tijd</label>
 			<label index="task_dayLimit.description">Het aantal dagen waarna de rijen uit de tabel worden verwijderd.</label>
 			<label index="task_markAsDeleted.alttitle">Zet op verwijderd</label>

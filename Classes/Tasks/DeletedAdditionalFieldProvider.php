@@ -96,7 +96,7 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 
 		$fieldId = 'task_deletedDayLimit';
 		$fieldCode = '<input type="text" name="tx_scheduler[deletedDayLimit]" id="' .
-			$fieldId . '" value="' . htmlspecialchars($taskInfo['deletedDayLimit']) . '"/>';
+			$fieldId . '" value="' . htmlspecialchars($taskInfo['deletedDayLimit']) . '" size="4"/>';
 		$additionalFields[$fieldId] = array(
 			'code' => $fieldCode,
 			'label' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml:tasks.deleted.dayLimit',

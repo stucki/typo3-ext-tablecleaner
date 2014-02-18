@@ -13,6 +13,8 @@ return array(
 	'tx_tablecleaner_tasks_deletedadditionalfieldprovider' => $extensionClassesPath . 'Tasks/DeletedAdditionalFieldProvider.php',
 	'tx_tablecleaner_tasks_expired' => $extensionClassesPath . 'Tasks/Expired.php',
 	'tx_tablecleaner_tasks_expiredadditionalfieldprovider' => $extensionClassesPath . 'Tasks/ExpiredAdditionalFieldProvider.php',
+	'tx_tablecleaner_tasks_paststoptime' => $extensionClassesPath . 'Tasks/PastStopTime.php',
+	'tx_tablecleaner_tasks_paststoptimeadditionalfieldprovider' => $extensionClassesPath . 'Tasks/PastStopTimeAdditionalFieldProvider.php',
 	'tx_tablecleaner_tasks_hidden' => $extensionClassesPath . 'Tasks/Hidden.php',
 	'tx_tablecleaner_tasks_hiddenadditionalfieldprovider' => $extensionClassesPath . 'Tasks/HiddenAdditionalFieldProvider.php',
 	'tx_tablecleaner_utility_base' => $extensionClassesPath . 'Utility/Base.php',

@@ -1,3 +1,6 @@
+2014-02-18  Michiel Roos <michiel@maxserv.nl>
+	* [FEATURE] Support time based content. Hide entries that are N days past the record 'endtime'.
+
 2014-02-17  Michiel Roos <michiel@maxserv.nl>
 	* [BUGFIX] Task remove expired entries fails to execute. Thanks to Andreas Beyl
 	* [BUGFIX] Missing tables in task remove expired entries. Thanks to Andreas Beyl
