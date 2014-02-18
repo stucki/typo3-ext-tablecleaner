@@ -45,7 +45,10 @@ class tx_tablecleaner_tasks_PastStopTime extends tx_tablecleaner_tasks_Base {
 			'hidden' => 1
 		);
 		foreach ($this->tables as $table) {
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, $this->getWhereClause($table, 'endtime'), $fieldValues);
+			$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+				' endtime > 0 AND ' . $table, $this->getWhereClause($table, 'endtime'),
+				$fieldValues
+			);
 			if ($GLOBALS['TYPO3_DB']->sql_error()) {
 				$successfullyExecuted = FALSE;
 			}
