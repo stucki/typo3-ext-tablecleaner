@@ -2,7 +2,7 @@
 /*****************************************************************************
  *  Copyright notice
  *
- *  ⓒ 2013 Michiel Roos <michiel@maxserv.nl>
+ *  ⓒ 2014 Michiel Roos <michiel@maxserv.nl>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is free
@@ -74,5 +74,4 @@ if (defined('TYPO3_MODE')
 ) {
 	require_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/tablecleaner/Classes/Tasks/Deleted.php']);
 }
-
 ?>

@@ -2,7 +2,7 @@
 /*****************************************************************************
  *  Copyright notice
  *
- *  ⓒ 2013 Michiel Roos <michiel@maxserv.nl>
+ *  ⓒ 2014 Michiel Roos <michiel@maxserv.nl>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is free
@@ -26,7 +26,7 @@
  * Date: 15/11/13
  * Time: 10:29
  */
- 
+
 /**
  * InfoModule controller
  *
@@ -37,6 +37,11 @@
 class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
+	 * @var t3lib_DB
+	 */
+	protected $databaseHandle;
+
+	/**
 	 * @var Tx_Tablecleaner_Domain_Repository_PageRepository
 	 */
 	protected $pageRepository;
@@ -45,6 +50,7 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 	 * inject Page repository
 	 *
 	 * @param Tx_Tablecleaner_Domain_Repository_PageRepository $pageRepository
+	 *
 	 * @return void
 	 */
 	public function injectPageRepository(Tx_Tablecleaner_Domain_Repository_PageRepository $pageRepository) {
@@ -57,20 +63,21 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 	 * @return void
 	 */
 	public function indexAction() {
+		$this->databaseHandle = $GLOBALS['TYPO3_DB'];
 
 		$uid = abs(t3lib_div::_GP('id'));
 		$values['startingPage'] = $this->pageRepository->findOneByUid($uid);
 
-			// Initialize tree object:
-			/** @var t3lib_browsetree $tree */
+		// Initialize tree object:
+		/** @var t3lib_browsetree $tree */
 		$tree = t3lib_div::makeInstance('t3lib_browsetree');
-			// Also store tree prefix markup:
+		// Also store tree prefix markup:
 		$tree->expandFirst = TRUE;
 		$tree->addField('tx_tablecleaner_exclude', TRUE);
 		$tree->addField('tx_tablecleaner_exclude_branch', TRUE);
 		$tree->makeHTML = 2;
 		$tree->table = 'pages';
-			// Set starting page id of the tree (overrides webmounts):
+		// Set starting page id of the tree (overrides webmounts):
 		$tree->setTreeName('tablecleaner_' . $uid);
 		$this->MOUNTS = $GLOBALS['WEBMOUNTS'];
 
@@ -84,12 +91,12 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 		$tree->showDefaultTitleAttribute = TRUE;
 		/**
 		 * Hmmm . . . need php_http module for this, can't count on that :-(
-		parse_str($parsedUrl['query'], $urlQuery);
-		unset($urlQuery['PM']);
-		$parsedUrl = http_build_query($urlQuery);
-		$tree->thisScript = http_build_url($parsedUrl);
-		*/
-			// Remove the PM parameter to avoid adding multiple of those to the url
+		 * parse_str($parsedUrl['query'], $urlQuery);
+		 * unset($urlQuery['PM']);
+		 * $parsedUrl = http_build_query($urlQuery);
+		 * $tree->thisScript = http_build_url($parsedUrl);
+		 */
+		// Remove the PM parameter to avoid adding multiple of those to the url
 		$tree->thisScript = preg_replace('/&PM=[^#$]*/', '', t3lib_div::getIndpEnv('REQUEST_URI'));
 
 		$tree->getBrowsableTree();
@@ -105,14 +112,15 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 	 *
 	 * @param integer $uid
 	 * @param string $subLevelId
+	 *
 	 * @return array
 	 */
 	protected function getTreeData($uid, $subLevelId) {
 
-			// Filter the results by preference and access
+		// Filter the results by preference and access
 		$clauseExludePidList = '';
 		if ($pidList = $GLOBALS['BE_USER']->getTSConfigVal('options.hideRecords.pages')) {
-			if ($pidList = $GLOBALS['TYPO3_DB']->cleanIntList($pidList)) {
+			if ($pidList = $this->databaseHandle->cleanIntList($pidList)) {
 				$clauseExludePidList = ' AND pages.uid NOT IN (' . $pidList . ')';
 			}
 		}
@@ -125,27 +133,33 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 		 *
 		 * 1). First fetch the page id's that have any exclusion options set
 		 */
-		$result = $GLOBALS['TYPO3_DB']->sql_query('
+		$result = $this->databaseHandle->sql_query('
 			SELECT GROUP_CONCAT(uid) AS uids
 			FROM pages
 			WHERE
 				tx_tablecleaner_exclude = 1 AND
 				deleted = 0 ' . $clause . ';
 		');
-		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
-		$excludePages = explode(',', $row['uids']);
-		$GLOBALS['TYPO3_DB']->sql_free_result($result);
+		$row = $this->databaseHandle->sql_fetch_assoc($result);
+		$excludePages = array();
+		if ($row['uids'] !== NULL) {
+			$excludePages = explode(',', $row['uids']);
+		}
+		$this->databaseHandle->sql_free_result($result);
 
-		$result = $GLOBALS['TYPO3_DB']->sql_query('
+		$result = $this->databaseHandle->sql_query('
 			SELECT GROUP_CONCAT(uid) AS uids
 			FROM pages
 			WHERE
 				tx_tablecleaner_exclude_branch = 1 AND
 				deleted = 0 ' . $clause . ';
 		');
-		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
-		$excludeBranchPages = explode(',', $row['uids']);
-		$GLOBALS['TYPO3_DB']->sql_free_result($result);
+		$row = $this->databaseHandle->sql_fetch_assoc($result);
+		$excludeBranchPages = array();
+		if ($row['uids'] !== NULL) {
+			$excludeBranchPages = explode(',', $row['uids']);
+		}
+		$this->databaseHandle->sql_free_result($result);
 
 		/**
 		 * 2). Fetch the id's up to the 'current root' page.
@@ -158,9 +172,9 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 
 		$allUids = array();
 		foreach ($allExcludedPages as $pageId) {
-				// Don't fetch the rootline if the pageId is already in the list
+			// Don't fetch the rootline if the pageId is already in the list
 			if (!in_array($pageId, $allUids)) {
-					// Get the rootline up to the starting uid
+				// Get the rootline up to the starting uid
 				$rootLine = t3lib_BEfunc::BEgetRootLine($pageId, ' AND NOT uid = ' . $uid . $clause);
 				foreach ($rootLine as $record) {
 					$allUids[] = $record['uid'];
@@ -205,7 +219,7 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 	 */
 	protected function reassembleTree($records, $parentId, $subLevelId) {
 		$branches = array();
-			// Check if there are any children of the $parentId
+		// Check if there are any children of the $parentId
 		foreach ($records as $record) {
 			if ($record['pid'] == $parentId) {
 				$children = $this->reassembleTree($records, $record['uid'], $subLevelId);

@@ -64,7 +64,7 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 				if (in_array('sys_history', $tablesWithDeleted)) {
 					$taskInfo['deletedTables'][] = 'sys_history';
 				}
-			} elseif ($schedulerModule->CMD == 'edit') {
+			} elseif ($schedulerModule->CMD === 'edit') {
 				// In case of editing the task, set to currently selected value
 				$taskInfo['deletedTables'] = $task->getTables();
 			}
@@ -87,7 +87,7 @@ class tx_tablecleaner_tasks_DeletedAdditionalFieldProvider implements tx_schedul
 
 		// daylimit
 		if (empty($taskInfo['deletedDayLimit'])) {
-			if ($schedulerModule->CMD == 'add') {
+			if ($schedulerModule->CMD === 'add') {
 				$taskInfo['deletedDayLimit'] = '31';
 			} else {
 				$taskInfo['deletedDayLimit'] = $task->getDayLimit();

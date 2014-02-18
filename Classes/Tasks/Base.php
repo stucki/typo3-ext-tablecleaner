@@ -146,9 +146,8 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	 */
 	public function getWhereClause($table) {
 		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
-		$tablesWithPid = Tx_Tablecleaner_Utility_Base::getTablesWithPid();
 		$where = ' tstamp < ' . strtotime('-' . (int)$this->dayLimit . 'days');
-		if (!empty($excludePages) && in_array($table, $tablesWithPid)) {
+		if (!empty($excludePages) && in_array($table, Tx_Tablecleaner_Utility_Base::getTablesWithPid())) {
 			if ($table === 'pages') {
 				$where .= ' AND NOT uid IN(' . implode(',', $excludePages) . ')';
 			} else {

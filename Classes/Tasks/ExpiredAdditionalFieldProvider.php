@@ -53,7 +53,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 		// tables
 		if (empty($taskInfo['expiredTables'])) {
 			$taskInfo['expiredTables'] = array();
-			if ($schedulerModule->CMD == 'add') {
+			if ($schedulerModule->CMD === 'add') {
 				// In case of new task, set some defaults
 				if (in_array('sys_log', $tables)) {
 					$taskInfo['expiredTables'][] = 'sys_log';
@@ -61,7 +61,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 				if (in_array('sys_history', $tables)) {
 					$taskInfo['expiredTables'][] = 'sys_history';
 				}
-			} elseif ($schedulerModule->CMD == 'edit') {
+			} elseif ($schedulerModule->CMD === 'edit') {
 				// In case of editing the task, set to currently selected value
 				$taskInfo['expiredTables'] = $task->getTables();
 			}
@@ -84,7 +84,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 
 		// day limit
 		if (empty($taskInfo['expiredDayLimit'])) {
-			if ($schedulerModule->CMD == 'add') {
+			if ($schedulerModule->CMD === 'add') {
 				$taskInfo['expiredDayLimit'] = '31';
 			} elseif ($schedulerModule->CMD == 'edit') {
 				$taskInfo['expiredDayLimit'] = $task->getDayLimit();
@@ -242,7 +242,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 	public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
 		/** @var $task tx_tablecleaner_tasks_Expired */
 		$task->setDayLimit((int)$submittedData['expiredDayLimit']);
-		$task->setOptimizeOption($submittedData['optimizeOption'] == 'checked');
+		$task->setOptimizeOption($submittedData['optimizeOption'] === 'checked');
 		$task->setTables($submittedData['expiredTables']);
 	}
 }
