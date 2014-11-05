@@ -20,6 +20,10 @@
 			<label index='tasks.deleted.description'>Removes deleted entries older than N days from tables.</label>
 			<label index='tasks.deleted.dayLimit'>Remove deleted entries older than given number of days</label>
 			<label index='tasks.deleted.additionalInformation'>Remove deleted entries older than %s days from tables: %s</label>
+			<label index='tasks.markLostRecords.title'>Table Cleaner: mark records as deleted</label>
+			<label index='tasks.markLostRecords.description'>Mark records as deleted if their pid is a number (&gt;0) and not deleted.</label>
+			<label index='tasks.markLostRecords.dayLimit'>Process entries older than given number of days</label>
+			<label index='tasks.markLostRecords.additionalInformation'>Process entries older than %s days from tables: %s</label>
 			<label index='tasks.expired.title'>Table Cleaner: remove expired entries</label>
 			<label index='tasks.expired.description'>Removes entries older than N days from tables.</label>
 			<label index='tasks.expired.dayLimit'>Delete entries older than given number of days</label>

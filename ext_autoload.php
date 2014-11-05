@@ -11,6 +11,8 @@ return array(
 	'tx_tablecleaner_tasks_base' => $extensionClassesPath . 'Tasks/Base.php',
 	'tx_tablecleaner_tasks_deleted' => $extensionClassesPath . 'Tasks/Deleted.php',
 	'tx_tablecleaner_tasks_deletedadditionalfieldprovider' => $extensionClassesPath . 'Tasks/DeletedAdditionalFieldProvider.php',
+	'tx_tablecleaner_tasks_marklostrecords' => $extensionClassesPath . 'Tasks/MarkLostRecords.php',
+	'tx_tablecleaner_tasks_marklostrecordsadditionalfieldprovider' => $extensionClassesPath . 'Tasks/MarkLostRecordsAdditionalFieldProvider.php',
 	'tx_tablecleaner_tasks_expired' => $extensionClassesPath . 'Tasks/Expired.php',
 	'tx_tablecleaner_tasks_expiredadditionalfieldprovider' => $extensionClassesPath . 'Tasks/ExpiredAdditionalFieldProvider.php',
 	'tx_tablecleaner_tasks_paststoptime' => $extensionClassesPath . 'Tasks/PastStopTime.php',
