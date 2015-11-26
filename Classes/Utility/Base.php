@@ -52,7 +52,8 @@ class Tx_Tablecleaner_Utility_Base {
 			AND COLUMN_NAME = 'tstamp'
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
-		if (is_resource($resource)) {
+
+		if (is_resource($resource) || $resource instanceof mysqli_result) {
 			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};
@@ -80,7 +81,7 @@ class Tx_Tablecleaner_Utility_Base {
 			AND COLUMN_NAME = 'endtime'
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
-		if (is_resource($resource)) {
+		if (is_resource($resource) || $resource instanceof mysqli_result) {
 			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};
@@ -108,7 +109,7 @@ class Tx_Tablecleaner_Utility_Base {
 			AND COLUMN_NAME = 'tstamp'
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
-		if (is_resource($resource)) {
+		if (is_resource($resource) || $resource instanceof mysqli_result) {
 			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};
@@ -130,7 +131,7 @@ class Tx_Tablecleaner_Utility_Base {
 			AND COLUMN_NAME = 'pid'
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
-		if (is_resource($resource)) {
+		if (is_resource($resource) || $resource instanceof mysqli_result) {
 			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};

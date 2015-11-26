@@ -170,7 +170,7 @@ class tx_tablecleaner_tasks_ExpiredAdditionalFieldProvider implements tx_schedul
 			AND COLUMN_NAME = 'tstamp'
 			AND TABLE_SCHEMA =  '" . TYPO3_db . "'"
 		);
-		if (is_resource($resource)) {
+		if (is_resource($resource) || $resource instanceof mysqli_result) {
 			while (($result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource))) {
 				$tables[] = $result['TABLE_NAME'];
 			};
