@@ -61,6 +61,13 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	protected $markAsDeleted;
 
 	/**
+	 * Print debug output
+	 *
+	 * @var boolean
+	 */
+	protected $debug = FALSE;
+
+	/**
 	 * Get the value of the protected property tables.
 	 *
 	 * @return array of tables

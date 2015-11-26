@@ -41,9 +41,14 @@ class tx_tablecleaner_tasks_Deleted extends tx_tablecleaner_tasks_Base {
 		$successfullyExecuted = TRUE;
 
 		foreach ($this->tables as $table) {
+			if ($this->debug) echo 'BEGIN ' . $table . "\t";
 			$where = 'deleted = 1 AND ' . $this->getWhereClause($table);
 			$GLOBALS['TYPO3_DB']->exec_DELETEquery($table, $where);
 			$error = $GLOBALS['TYPO3_DB']->sql_error();
+
+			$affectedRows = $GLOBALS['TYPO3_DB']->sql_affected_rows();
+			if ($this->debug) echo ' - DONE: ' . $affectedRows . ' rows' . chr(10);
+
 			if (!$error && $this->optimizeOption) {
 				$GLOBALS['TYPO3_DB']->sql_query('OPTIMIZE TABLE ' . $table);
 				$error = $GLOBALS['TYPO3_DB']->sql_error();

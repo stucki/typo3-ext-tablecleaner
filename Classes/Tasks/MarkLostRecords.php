@@ -51,7 +51,7 @@ class tx_tablecleaner_tasks_MarkLostRecords extends tx_tablecleaner_tasks_Base {
 
 			if ($numberOfAffectedRecords === 0 || $numberOfAffectedRecords === $numberOfAffectedRecords_lastRun) {
 				// We're done
-				echo 'Recursion completed. Leaving loop...' . chr(10);
+				if ($this->debug) echo 'Recursion completed. Leaving loop...' . chr(10);
 				break;
 			}
 			$numberOfAffectedRecords_lastRun = $numberOfAffectedRecords;
@@ -71,6 +71,7 @@ class tx_tablecleaner_tasks_MarkLostRecords extends tx_tablecleaner_tasks_Base {
 			}
 
 			// Mark all records as deleted=1 if their pid is deleted or does not exist
+			if ($this->debug) echo 'BEGIN: ' . $table . chr(10);
 			$this->markRecordsAsDeletedIfPidIsDeletedOrMissing($table);
 		}
 		return $successfullyExecuted;
@@ -108,7 +109,7 @@ class tx_tablecleaner_tasks_MarkLostRecords extends tx_tablecleaner_tasks_Base {
 			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, $where, array('deleted' => 1));
 
 			$affectedRows = $GLOBALS['TYPO3_DB']->sql_affected_rows();
-			echo 'FINISHED ' . $table . ': Affected records: ' . $affectedRows . chr(10);
+			if ($this->debug) echo 'FINISHED ' . $table . ': Affected records: ' . $affectedRows . chr(10);
 		}
 
 		return $affectedRows;
