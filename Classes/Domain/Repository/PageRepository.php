@@ -47,7 +47,11 @@ class Tx_Tablecleaner_Domain_Repository_PageRepository extends Tx_Extbase_Persis
 	public function initializeObject() {
 		/** @var $defaultQuerySettings Tx_Extbase_Persistence_Typo3QuerySettings */
 		$defaultQuerySettings = $this->objectManager->get('Tx_Extbase_Persistence_Typo3QuerySettings');
-		$defaultQuerySettings->setRespectEnableFields(FALSE);
+		if (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 6000000) {
+			$defaultQuerySettings->setIgnoreEnableFields(TRUE);
+		} else {
+			$defaultQuerySettings->setRespectEnableFields(FALSE);
+		}
 		$defaultQuerySettings->setRespectStoragePage(FALSE);
 		$defaultQuerySettings->setReturnRawQueryResult(TRUE);
 		$this->setDefaultQuerySettings($defaultQuerySettings);
