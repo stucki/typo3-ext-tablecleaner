@@ -21,6 +21,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ****************************************************************************/
 
+namespace Stucki\TableCleaner\Utility;
+
 /**
  * Base utility methods
  *
@@ -30,7 +32,7 @@
  * @license http://opensource.org/licenses/gpl-license.php
  *    GNU Public License, version 2
  */
-class Tx_Tablecleaner_Utility_Base {
+class Base {
 
 	/**
 	 * Get tables with deleted and tstamp fields

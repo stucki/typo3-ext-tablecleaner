@@ -27,6 +27,10 @@
  * Time: 10:29
  */
 
+namespace Stucki\TableCleaner\Controller;
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * InfoModule controller
  *
@@ -34,7 +38,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License,
  * version 3 or later
  */
-class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Controller_ActionController {
+class InfoModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * @var t3lib_DB
@@ -42,18 +46,18 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 	protected $databaseHandle;
 
 	/**
-	 * @var Tx_Tablecleaner_Domain_Repository_PageRepository
+	 * @var \Stucki\Tablecleaner\Domain\Repository\PageRepository
 	 */
 	protected $pageRepository;
 
 	/**
 	 * inject Page repository
 	 *
-	 * @param Tx_Tablecleaner_Domain_Repository_PageRepository $pageRepository
+	 * @param \Stucki\Tablecleaner\Domain\Repository\PageRepository $pageRepository
 	 *
 	 * @return void
 	 */
-	public function injectPageRepository(Tx_Tablecleaner_Domain_Repository_PageRepository $pageRepository) {
+	public function injectPageRepository(\Stucki\Tablecleaner\Domain\Repository\PageRepository $pageRepository) {
 		$this->pageRepository = $pageRepository;
 	}
 
@@ -65,12 +69,12 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 	public function indexAction() {
 		$this->databaseHandle = $GLOBALS['TYPO3_DB'];
 
-		$uid = abs(t3lib_div::_GP('id'));
+		$uid = abs(GeneralUtility::_GP('id'));
 		$values['startingPage'] = $this->pageRepository->findOneByUid($uid);
 
 		// Initialize tree object:
 		/** @var t3lib_browsetree $tree */
-		$tree = t3lib_div::makeInstance('t3lib_browsetree');
+		$tree = GeneralUtility::makeInstance('t3lib_browsetree');
 		// Also store tree prefix markup:
 		$tree->expandFirst = TRUE;
 		$tree->addField('tx_tablecleaner_exclude', TRUE);
@@ -97,7 +101,7 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 		 * $tree->thisScript = http_build_url($parsedUrl);
 		 */
 		// Remove the PM parameter to avoid adding multiple of those to the url
-		$tree->thisScript = preg_replace('/&PM=[^#$]*/', '', t3lib_div::getIndpEnv('REQUEST_URI'));
+		$tree->thisScript = preg_replace('/&PM=[^#$]*/', '', GeneralUtility::getIndpEnv('REQUEST_URI'));
 
 		$tree->getBrowsableTree();
 
@@ -191,7 +195,7 @@ class Tx_Tablecleaner_Controller_InfoModuleController extends Tx_Extbase_MVC_Con
 		 * 4). Fetch all the children of the pages that have exclude_branch set.
 		 */
 		foreach ($excludeBranchPages as $pageId) {
-			$allUids = array_merge($allUids, Tx_Tablecleaner_Utility_Base::fetchChildPages($pageId));
+			$allUids = array_merge($allUids, \Stucki\Tablecleaner\Utility\Base::fetchChildPages($pageId));
 		}
 		$allUids = array_unique($allUids);
 

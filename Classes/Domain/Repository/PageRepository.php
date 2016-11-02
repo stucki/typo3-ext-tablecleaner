@@ -26,17 +26,18 @@
  * Date: 08/11/13
  * Time: 11:48
  */
+namespace Stucki\TableCleaner\Domain\Repository;
 
 /**
  * Page repository
  */
-class Tx_Tablecleaner_Domain_Repository_PageRepository extends Tx_Extbase_Persistence_Repository {
+class PageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
 	/**
 	 * @var array
 	 */
 	protected $defaultOrderings = array(
-		'sorting' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
+		'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
 	);
 
 	/**
@@ -45,9 +46,9 @@ class Tx_Tablecleaner_Domain_Repository_PageRepository extends Tx_Extbase_Persis
 	 * @return void
 	 */
 	public function initializeObject() {
-		/** @var $defaultQuerySettings Tx_Extbase_Persistence_Typo3QuerySettings */
-		$defaultQuerySettings = $this->objectManager->get('Tx_Extbase_Persistence_Typo3QuerySettings');
-		if (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 6000000) {
+		/** @var $defaultQuerySettings \TYPO3\CMS\Extbase\Persistence\Typo3QuerySettings */
+		$defaultQuerySettings = $this->objectManager->get('\TYPO3\CMS\Extbase\Persistence\Typo3QuerySettings');
+		if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 6000000) {
 			$defaultQuerySettings->setIgnoreEnableFields(TRUE);
 		} else {
 			$defaultQuerySettings->setRespectEnableFields(FALSE);

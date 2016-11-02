@@ -21,6 +21,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ****************************************************************************/
 
+namespace Stucki\TableCleaner\Domain\Model;
+
 /**
  * A page
  *
@@ -28,7 +30,7 @@
  * @package TYPO3
  * @subpackage tablecleaner
  */
-class Tx_Tablecleaner_Domain_Model_Page extends Tx_Extbase_DomainObject_AbstractEntity {
+class Page extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * @var boolean

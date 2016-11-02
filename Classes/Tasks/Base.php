@@ -20,6 +20,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ****************************************************************************/
+namespace Stucki\TableCleaner\Tasks;
 
 /**
  * Base scheduler task
@@ -30,7 +31,7 @@
  * @license http://opensource.org/licenses/gpl-license.php
  *    GNU Public License, version 2
  */
-class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
+class Base extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 
 	/**
 	 * Array of tables
@@ -153,8 +154,8 @@ class tx_tablecleaner_tasks_Base extends tx_scheduler_Task {
 	 * @return string
 	 */
 	public function getWhereClause($table, $stampField = 'tstamp') {
-		$excludePages = Tx_Tablecleaner_Utility_Base::fetchExcludedPages();
-		$tablesWithPid = Tx_Tablecleaner_Utility_Base::getTablesWithPid();
+		$excludePages = \Stucki\Tablecleaner\Utility\Base::fetchExcludedPages();
+		$tablesWithPid = \Stucki\Tablecleaner\Utility\Base::getTablesWithPid();
 		$where = ' ' . $stampField . ' < ' . strtotime('-' . (int)$this->dayLimit . 'days');
 		if (!empty($excludePages) && in_array($table, $tablesWithPid)) {
 			if ($table === 'pages') {

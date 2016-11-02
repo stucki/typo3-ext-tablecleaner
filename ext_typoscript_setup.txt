@@ -4,7 +4,7 @@
 config.tx_extbase {
 	persistence {
 		classes {
-			Tx_Tablecleaner_Domain_Model_Page {
+			Stucki\Tablecleaner\Domain\Model\Page {
 				mapping {
 					tableName = pages
 					columns {

@@ -42,7 +42,9 @@
  *
  * @api
  */
-class Tx_Tablecleaner_ViewHelpers_Format_RawViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+namespace Stucki\TableCleaner\ViewHelpers;
+
+class Format\RawViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @param mixed $value The value to output

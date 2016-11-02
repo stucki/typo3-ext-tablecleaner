@@ -44,7 +44,9 @@
  *
  * @api
  */
-class Tx_Tablecleaner_ViewHelpers_Format_ReplaceViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+namespace Stucki\TableCleaner\ViewHelpers;
+
+class Format\ReplaceViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Do a simple search and replace on a string

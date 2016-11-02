@@ -3,6 +3,8 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 if (TYPO3_MODE === 'BE') {
 
 	$columnArray = array(
@@ -32,29 +34,29 @@ if (TYPO3_MODE === 'BE') {
 		)
 	);
 
-	t3lib_extMgm::addTCAcolumns('pages', $columnArray['pages']);
+	ExtensionManagementUtility::addTCAcolumns('pages', $columnArray['pages']);
 
 	if (isset($GLOBALS['TCA']['pages']['palettes']['visibility'])) {
-		t3lib_extMgm::addFieldsToPalette('pages', 'visibility', 'tx_tablecleaner_exclude', 'after:nav_hide');
-		t3lib_extMgm::addFieldsToPalette('pages', 'visibility', 'tx_tablecleaner_exclude_branch', 'after:tx_tablecleaner_exclude');
+		ExtensionManagementUtility::addFieldsToPalette('pages', 'visibility', 'tx_tablecleaner_exclude', 'after:nav_hide');
+		ExtensionManagementUtility::addFieldsToPalette('pages', 'visibility', 'tx_tablecleaner_exclude_branch', 'after:tx_tablecleaner_exclude');
 	} else {
-		t3lib_extMgm::addToAllTCAtypes('pages', 'tx_tablecleaner_exclude', '', 'after:nav_hide');
-		t3lib_extMgm::addToAllTCAtypes('pages', 'tx_tablecleaner_exclude_branch', '', 'after:tx_tablecleaner_exclude');
+		ExtensionManagementUtility::addToAllTCAtypes('pages', 'tx_tablecleaner_exclude', '', 'after:nav_hide');
+		ExtensionManagementUtility::addToAllTCAtypes('pages', 'tx_tablecleaner_exclude_branch', '', 'after:tx_tablecleaner_exclude');
 	}
 
-	t3lib_extMgm::addLLrefForTCAdescr('tablecleaner', 'EXT:tablecleaner/Resources/Private/Language/ContextSensitiveHelp.xml');
-	t3lib_extMgm::addLLrefForTCAdescr('pages', 'EXT:tablecleaner/Resources/Private/Language/ContextSensitiveHelpPages.xml');
+	ExtensionManagementUtility::addLLrefForTCAdescr('tablecleaner', 'EXT:tablecleaner/Resources/Private/Language/ContextSensitiveHelp.xml');
+	ExtensionManagementUtility::addLLrefForTCAdescr('pages', 'EXT:tablecleaner/Resources/Private/Language/ContextSensitiveHelpPages.xml');
 
 	/**
 	 * Register the Backend Module
 	 */
-	Tx_Extbase_Utility_Extension::registerModule (
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 			// Extension name
 		'tablecleaner',
 			// Place in section
 		'web',
 			// Module name
-		'Tx_Tablecleaner_InfoModule',
+		'mod1',
 			// Position
 		'after:info',
 			// An array holding the controller-action-combinations that are accessible

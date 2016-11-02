@@ -1,0 +1,25 @@
+{
+    "name": "stucki/tablecleaner",
+    "type": "typo3-cms-extension",
+    "description": "TODO",
+    "homepage": "TODO",
+    "license": "LGPL-3.0+",
+    "replace": {
+        "tablecleaner": "self.version",
+        "typo3-ter/tablecleaner": "self.version"
+    },
+    "require": {
+        "typo3/cms-core": ">=6.2.0,<8.1.0",
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stucki\\Tablecleaner\\": "Classes"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-feature/typo3_7-6": "3.0.x-dev"
+        }
+    }
+}
