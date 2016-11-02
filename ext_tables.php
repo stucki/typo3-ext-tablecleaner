@@ -50,26 +50,21 @@ if (TYPO3_MODE === 'BE') {
 	/**
 	 * Register the Backend Module
 	 */
-	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-			// Extension name
-		'tablecleaner',
-			// Place in section
-		'web',
-			// Module name
-		'mod1',
-			// Position
-		'after:info',
-			// An array holding the controller-action-combinations that are accessible
-			// The first controller and its first action will be the default
-		array(
-			'InfoModule' => 'index'
-		),
-		array(
-			'access' => 'user,group',
-			'icon'   => 'EXT:tablecleaner/ext_icon.gif',
-			'labels' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml',
-		)
-	);
-
+	if (version_compare(TYPO3_version, '7.6.0', '>=')) {
+		\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+			'Stucki.Tablecleaner',
+			'web',
+			'tablecleaner',
+			'after:info',
+			array(
+				'InfoModule' => 'index'
+			),
+			array(
+				'access' => 'user,group',
+				'icon'   => 'EXT:tablecleaner/ext_icon.gif',
+				'labels' => 'LLL:EXT:tablecleaner/Resources/Private/Language/locallang.xml',
+			)
+		);
+	}
 }
 ?>

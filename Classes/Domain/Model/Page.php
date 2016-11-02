@@ -21,7 +21,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ****************************************************************************/
 
-namespace Stucki\TableCleaner\Domain\Model;
+namespace Stucki\Tablecleaner\Domain\Model;
 
 /**
  * A page

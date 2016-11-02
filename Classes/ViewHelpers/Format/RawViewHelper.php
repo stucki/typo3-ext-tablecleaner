@@ -42,7 +42,7 @@
  *
  * @api
  */
-namespace Stucki\TableCleaner\ViewHelpers;
+namespace Stucki\Tablecleaner\ViewHelpers;
 
 class Format\RawViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 

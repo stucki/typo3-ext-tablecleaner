@@ -20,7 +20,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ****************************************************************************/
-namespace Stucki\TableCleaner\Tasks;
+namespace Stucki\Tablecleaner\Tasks;
 
 /**
  * Base scheduler task

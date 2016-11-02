@@ -44,7 +44,7 @@
  *
  * @api
  */
-namespace Stucki\TableCleaner\ViewHelpers;
+namespace Stucki\Tablecleaner\ViewHelpers;
 
 class Format\ReplaceViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 

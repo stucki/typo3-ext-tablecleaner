@@ -21,7 +21,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ****************************************************************************/
 
-namespace Stucki\TableCleaner\Utility;
+namespace Stucki\Tablecleaner\Utility;
 
 /**
  * Base utility methods

@@ -27,7 +27,7 @@
  * Time: 10:29
  */
 
-namespace Stucki\TableCleaner\Controller;
+namespace Stucki\Tablecleaner\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -74,7 +74,7 @@ class InfoModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 		// Initialize tree object:
 		/** @var t3lib_browsetree $tree */
-		$tree = GeneralUtility::makeInstance('t3lib_browsetree');
+		$tree = GeneralUtility::makeInstance('TYPO3\CMS\Backend\Tree\View\BrowseTreeView');
 		// Also store tree prefix markup:
 		$tree->expandFirst = TRUE;
 		$tree->addField('tx_tablecleaner_exclude', TRUE);
@@ -82,7 +82,7 @@ class InfoModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$tree->makeHTML = 2;
 		$tree->table = 'pages';
 		// Set starting page id of the tree (overrides webmounts):
-		$tree->setTreeName('tablecleaner_' . $uid);
+		//$tree->setTreeName('tablecleaner_' . $uid);
 		$this->MOUNTS = $GLOBALS['WEBMOUNTS'];
 
 		$tree->init();
@@ -179,7 +179,7 @@ class InfoModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			// Don't fetch the rootline if the pageId is already in the list
 			if (!in_array($pageId, $allUids)) {
 				// Get the rootline up to the starting uid
-				$rootLine = t3lib_BEfunc::BEgetRootLine($pageId, ' AND NOT uid = ' . $uid . $clause);
+				$rootLine = \TYPO3\CMS\Backend\Utility\BackendUtility::BEgetRootLine($pageId, ' AND NOT uid = ' . $uid . $clause);
 				foreach ($rootLine as $record) {
 					$allUids[] = $record['uid'];
 				}

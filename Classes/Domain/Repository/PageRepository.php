@@ -26,7 +26,7 @@
  * Date: 08/11/13
  * Time: 11:48
  */
-namespace Stucki\TableCleaner\Domain\Repository;
+namespace Stucki\Tablecleaner\Domain\Repository;
 
 /**
  * Page repository
@@ -47,14 +47,13 @@ class PageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 */
 	public function initializeObject() {
 		/** @var $defaultQuerySettings \TYPO3\CMS\Extbase\Persistence\Typo3QuerySettings */
-		$defaultQuerySettings = $this->objectManager->get('\TYPO3\CMS\Extbase\Persistence\Typo3QuerySettings');
+		$defaultQuerySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
 		if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 6000000) {
 			$defaultQuerySettings->setIgnoreEnableFields(TRUE);
 		} else {
 			$defaultQuerySettings->setRespectEnableFields(FALSE);
 		}
 		$defaultQuerySettings->setRespectStoragePage(FALSE);
-		$defaultQuerySettings->setReturnRawQueryResult(TRUE);
 		$this->setDefaultQuerySettings($defaultQuerySettings);
 	}
 
@@ -74,7 +73,7 @@ class PageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 				$query->equals('deleted', 0)
 			)
 		)
-			->execute();
+			->execute(TRUE);
 	}
 
 }
